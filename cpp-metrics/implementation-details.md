@@ -1,6 +1,6 @@
 # Metrics API/SDK Implementation Details
 
-This document will represent the implementation details we plan on using when implementing the OpenTelemetry Metrics API & SDK in C++. 
+This document will represent the implementation details we plan on using when implementing the OpenTelemetry Metrics API & SDK in C++. **This is not a final, correct implementation. It is simply a snapshot of our current plan and is subject to change.**
 
 ### Class names (and naming convention)
 
