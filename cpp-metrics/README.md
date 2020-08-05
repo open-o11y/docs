@@ -51,27 +51,27 @@ Before collecting data, the metrics pipeline must be configured:
 
 `auto provider = shared_ptr<MeterProvider>(new MeterProvider);`
 
-1. Set the MeterProvider as the default instance for the library. This ensures that we will have access to the same MeterProvider across our application.
+2. Set the MeterProvider as the default instance for the library. This ensures that we will have access to the same MeterProvider across our application.
 
 `Provider::SetMeterProvider(provider);`
 
-1. Obtain a meter from this meter provider. Every Meter pointer returned by the MeterProvider points to the same Meter. This means that the Meter will be able to combine metrics captured from different functions without having to constantly pass the Meter around the library.
+3. Obtain a meter from this meter provider. Every Meter pointer returned by the MeterProvider points to the same Meter. This means that the Meter will be able to combine metrics captured from different functions without having to constantly pass the Meter around the library.
 
 `shared_ptr<Meter> meter = provider→GetMeter("Test");`
 
-1. Initialize an exporter and processor. In this case, we initialize an OStream Exporter which will print to stdout by default. The Processor is an UngroupedProcessor which doesn’t filter or group captured metrics in any way. The false parameter indicated that this processor will not be cumulative.
+4. Initialize an exporter and processor. In this case, we initialize an OStream Exporter which will print to stdout by default. The Processor is an UngroupedProcessor which doesn’t filter or group captured metrics in any way. The false parameter indicated that this processor will not be cumulative.
 
 ```
 unique_ptr<MetricsExporter> exporter = unique_ptr<MetricsExporter>(new OStreamMetricsExporter);  
 shared_ptr<MetricsProcessor> processor = shared_ptr<MetricsProcessor>(new UngroupedMetricsProcessor(false));
 ```
 
-1. Pass the meter, exporter, and processor into the controller. Since this is a push controller, a collection interval parameter (in seconds) is also taken. At each collection interval, the controller will request data from all of the instruments in the code and export them. Start the controller to begin the metrics pipeline.
+5. Pass the meter, exporter, and processor into the controller. Since this is a push controller, a collection interval parameter (in seconds) is also taken. At each collection interval, the controller will request data from all of the instruments in the code and export them. Start the controller to begin the metrics pipeline.
 
 `metrics_sdk::PushController controller(meter, std::move(exporter), processor, 5);`
 `controller.start();`
 
-1. Instrument code with synchronous and asynchronous instrument. These instruments can be placed in areas of interest to collect metrics and are created by the meter. Synchronous instruments are updated whenever the user desires with a value and label set. Calling add on a counter instrument for example will increase its value.  Asynchronous instruments can be updated the same way, but are intended to recieve updates from a callback function. The callback below observes a value of 1. The user never has to call this function as it is automatically called by the controller. 
+6. Instrument code with synchronous and asynchronous instrument. These instruments can be placed in areas of interest to collect metrics and are created by the meter. Synchronous instruments are updated whenever the user desires with a value and label set. Calling add on a counter instrument for example will increase its value.  Asynchronous instruments can be updated the same way, but are intended to recieve updates from a callback function. The callback below observes a value of 1. The user never has to call this function as it is automatically called by the controller. 
 
 ```
 
