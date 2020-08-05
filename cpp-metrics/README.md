@@ -7,7 +7,7 @@ ADD TABLE OF CONTENTS
 
 ## Architecture Overview
 
-![UML Diagram](../images/metrics-UML.png)
+![UML Diagram](../images/Metrics-UML.png)
 
 ### Note on Inheritance Hierarchy
 
