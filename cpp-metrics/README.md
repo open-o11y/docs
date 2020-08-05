@@ -112,6 +112,7 @@ ctr->add(5, labelkv);
 **SDK**
 
 * All SDK header files are located in the folder sdk/include/opentelemetry/metrics.
+  * Aggregator header files are located in the further subdirectory sdk/include/opentelemetry/metrics/aggregator.
 * The SDK source files can be found in sdk/src/metrics.
 * The tests are located in sdk/test/metrics.
 
