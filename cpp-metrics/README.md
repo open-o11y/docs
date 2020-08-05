@@ -2,7 +2,16 @@
 
 ## Table of Contents
 
-ADD TABLE OF CONTENTS
+* [Architecture Overview](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#architecture-overview)
+   * [Note on Inheritance Hierarchy](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#note-on-inheritance-hierarchy)
+* [SDK Data Path](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#sdk-data-path)
+* [Usage](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#usage)
+* [Repository Structure](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#repository-structure)
+* [Testing](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#testing)
+   * [Bazel](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#bazel)
+   * [CMake](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#cmake)
+* [Outstanding Tasks](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#outstanding-tasks)
+* [Reference Doucments](https://github.com/open-o11y/docs/blob/master/cpp-metrics/README.md#reference-documents)
 
 
 ## Architecture Overview
