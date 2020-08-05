@@ -1,4 +1,4 @@
-# README for OpenTelemetry C++ Metrics API & SDK
+## OpenTelemetry C++ Metrics API & SDK
 
 ## Table of Contents
 
