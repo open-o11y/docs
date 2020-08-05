@@ -59,7 +59,7 @@ Before collecting data, the metrics pipeline must be configured:
 
 `shared_ptr<Meter> meter = provider→GetMeter("Test");`
 
-4. Initialize an exporter and processor. In this case, we initialize an OStream Exporter which will print to stdout by default. The Processor is an UngroupedProcessor which doesn’t filter or group captured metrics in any way. The false parameter indicated that this processor will not be cumulative.
+4. Initialize an exporter and processor. In this case, we initialize an OStream Exporter which will print to stdout by default. The Processor is an UngroupedProcessor which doesn’t filter or group captured metrics in any way. The false parameter indicates that this processor will send metric deltas rather than metric cumulatives.
 
 ```
 unique_ptr<MetricsExporter> exporter = unique_ptr<MetricsExporter>(new OStreamMetricsExporter);  
@@ -97,7 +97,7 @@ ctr->add(5, labelkv);
 
 ```
 
-1. Stop the controller once the program finished. This ensures that any metrics inside the pipeline are properly exported. Otherwise, some metrics may be destroyed in cleanup.
+7. Stop the controller once the program finished. This ensures that any metrics inside the pipeline are properly exported. Otherwise, some metrics may be destroyed in cleanup.
 
 `controller.stop();`
 
