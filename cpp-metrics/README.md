@@ -116,6 +116,9 @@ ctr->add(5, labelkv);
 * The SDK source files can be found in sdk/src/metrics.
 * The tests are located in sdk/test/metrics.
 
+In order to better convey the repository structure there is an embedded image of the directory below. This does not include all metrics files but does show
+where the header, source, and test files are located.
+
 Screenshot of directory structure (**NOTE: This does NOT include all Metrics API & SDK files):**
 
 ![Directory Structure 1](../images/dir-structure-1.png)
