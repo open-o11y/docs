@@ -192,6 +192,6 @@ Design for the OStreamExporters can be found in our [public documents repository
 Pipeline testing instructions and scripts can be found in our [public C++ repository](https://github.com/open-o11y/opentelemetry-cpp/tree/master/sdk/test/metrics).
 
 ## Contributors
-* Ankit Bhargava
-* Brandon Kimberly
-* Hudson Humphries
+* [Ankit Bhargava](https://github.com/ankit-bhargava)
+* [Brandon Kimberly](https://github.com/Brandon-Kimberly)
+* [Hudson Humphries](https://github.com/HudsonHumphries)
