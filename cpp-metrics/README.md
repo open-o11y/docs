@@ -175,14 +175,7 @@ This is how a `CMakeLists.txt` file will be written with the purpose of unit tes
 
 ## Outstanding Tasks
 
-Open Pull Requests:
-
-* https://github.com/open-telemetry/opentelemetry-cpp/pull/212
-    * Brandon
-* https://github.com/open-telemetry/opentelemetry-cpp/pull/231
-    * Ankit
-
-We have also filed several issues for enhancements to the metrics library:
+We have filed several issues for enhancements to the metrics library:
 
 * 
 
