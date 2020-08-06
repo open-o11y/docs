@@ -101,7 +101,7 @@ ctr->add(5, labelkv);
 
 `controller.stop();`
 
-A more complete usage example can be found [here](https://github.com/open-telemetry/opentelemetry-cpp/pull/258)
+A more complete usage example can be found [here](https://github.com/open-telemetry/opentelemetry-cpp/pull/258).
 
 ## Repository Structure
 
