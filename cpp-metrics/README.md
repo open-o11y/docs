@@ -177,7 +177,11 @@ This is how a `CMakeLists.txt` file will be written with the purpose of unit tes
 
 We have filed several issues for enhancements to the metrics library:
 
-* 
+* [Allow users to specify aggregators](https://github.com/open-telemetry/opentelemetry-cpp/issues/253)
+* [Change key for ungrouped processor to a struct/class](https://github.com/open-telemetry/opentelemetry-cpp/issues/254)
+* [Bug: Aggregators with no updates are still exported](https://github.com/open-telemetry/opentelemetry-cpp/issues/255)
+* [Add support for multiple meters](https://github.com/open-telemetry/opentelemetry-cpp/issues/256)
+* [Aggregators shouldn't store values in vectors](https://github.com/open-telemetry/opentelemetry-cpp/issues/257)
 
 ## Reference Documents
 
