@@ -184,3 +184,5 @@ We have filed several issues for enhancements to the metrics library:
 Designs for the API and SDK can be found in our [public documents repository](https://github.com/open-o11y/docs/tree/master/cpp-metrics).
 
 Design for the OStreamExporters can be found in our [public documents repository](https://github.com/open-o11y/docs).
+
+Pipeline testing instructions and scripts can be found in our [public C++ repository](https://github.com/open-o11y/opentelemetry-cpp/tree/master/sdk/test/metrics).
