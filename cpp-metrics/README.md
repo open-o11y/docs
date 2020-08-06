@@ -186,6 +186,23 @@ We have filed several issues for enhancements to the metrics library:
 * [Add support for multiple meters](https://github.com/open-telemetry/opentelemetry-cpp/issues/256)
 * [Aggregators shouldn't store values in vectors](https://github.com/open-telemetry/opentelemetry-cpp/issues/257)
 
+## Pull Requests Filed and Merged
+* [OStream Span Exporter](https://github.com/open-telemetry/opentelemetry-cpp/pull/183)
+* [OStream Metrics Exporter](https://github.com/open-telemetry/opentelemetry-cpp/pull/218)
+* [MeterProvider API](https://github.com/open-telemetry/opentelemetry-cpp/pull/165)
+* [MeterProvider SDK](https://github.com/open-telemetry/opentelemetry-cpp/pull/182)
+* [MMSC and Gauge aggregators](https://github.com/open-telemetry/opentelemetry-cpp/pull/182)
+* [Counter and Histogram aggregators](https://github.com/open-telemetry/opentelemetry-cpp/pull/178)
+* [Exact aggregator](https://github.com/open-telemetry/opentelemetry-cpp/pull/198)
+* [Sketch aggregator](https://github.com/open-telemetry/opentelemetry-cpp/pull/213)
+* [Instruments API](https://github.com/open-telemetry/opentelemetry-cpp/pull/161)
+* [Synchronous Instruments SDK](https://github.com/open-telemetry/opentelemetry-cpp/pull/179)
+* [Asynchronous Instruments SDK](https://github.com/open-telemetry/opentelemetry-cpp/pull/191)
+* [Meter API](https://github.com/open-telemetry/opentelemetry-cpp/pull/162)
+* [Meter SDK](https://github.com/open-telemetry/opentelemetry-cpp/pull/212)
+* [Processor](https://github.com/open-telemetry/opentelemetry-cpp/pull/229)
+* [Controller](https://github.com/open-telemetry/opentelemetry-cpp/pull/231)
+
 ## Reference Documents
 
 Designs for the API and SDK can be found in our [public documents repository](https://github.com/open-o11y/docs/tree/master/cpp-metrics).
