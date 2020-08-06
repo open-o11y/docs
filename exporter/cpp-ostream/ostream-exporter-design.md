@@ -190,3 +190,6 @@ In terms of test framework, as is described in the [Metrics API/SDK design docum
 ## Future Features
 
 * Serialize data to another format (json)
+
+## Contributors
+* Hudson Humphries
