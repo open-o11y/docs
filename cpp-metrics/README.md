@@ -187,6 +187,7 @@ We have filed several issues for enhancements to the metrics library:
 * [Aggregators shouldn't store values in vectors](https://github.com/open-telemetry/opentelemetry-cpp/issues/257)
 * [Allow users to specify a Metrics Controller thread](https://github.com/open-telemetry/opentelemetry-cpp/issues/260)
 * [Add customization to Exact/Sketch Aggregators](https://github.com/open-telemetry/opentelemetry-cpp/issues/259)
+* [Allow users to specify Controller's thread](https://github.com/open-telemetry/opentelemetry-cpp/issues/260)
 
 ## Pull Requests Filed and Merged
 * [OStream Span Exporter](https://github.com/open-telemetry/opentelemetry-cpp/pull/183)
