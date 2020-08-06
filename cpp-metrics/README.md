@@ -186,3 +186,8 @@ Designs for the API and SDK can be found in our [public documents repository](ht
 Design for the OStreamExporters can be found in our [public documents repository](https://github.com/open-o11y/docs).
 
 Pipeline testing instructions and scripts can be found in our [public C++ repository](https://github.com/open-o11y/opentelemetry-cpp/tree/master/sdk/test/metrics).
+
+## Contributors
+* Ankit Bhargava
+* Brandon Kimberly
+* Hudson Humphries
