@@ -82,7 +82,7 @@ In order to run an example program to test the Prometheus Exporter, you can setu
        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
     ```
-4. A more complete usage example can be found [here](https://github.com/open-telemetry/opentelemetry-cpp/pull/258).
+4. A more complete usage example can be found [here] (add link later).
 
 ## Repository Structure
 **Interface**
