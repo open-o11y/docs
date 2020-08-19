@@ -96,7 +96,7 @@ Described below are the existing components from the Go SDK which the Cortex Exp
 with.
 
 ![Diagram showing data flow from the Controller to accumulator, to processor, to exporter, to backend like
-Jaeger](./images/DataPath.png)
+Jaeger](./images/sdk-data-path.png)
 
 The Go SDK implements a
 [Push](https://github.com/open-telemetry/opentelemetry-go/blob/master/sdk/metric/controller/push/push.go)
@@ -429,7 +429,7 @@ CheckpointSet to TimeSeries by calling `convertToTimeSeries()`. It then calls `B
 `SendRequest()` functions which will build and send an HTTP request with the TimeSeries to Cortex.
 These methods are described in detail below.
 
-![Overall exporter design diagram](./images/exporter.png)
+![Overall exporter design diagram](./images/exporter-sequence.png)
 
 ### ExportKindFor
 
