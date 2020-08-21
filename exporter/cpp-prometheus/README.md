@@ -173,12 +173,9 @@ We have filed several issues for enhancements to the metrics library:
 
 ## Pull Requests Filed (and to be merged)
 - [MetricsExporter Interface](https://github.com/open-telemetry/opentelemetry-cpp/pull/240)
-- [Prometheus utils header and build config for bazel and CMake](https://github.com/open-telemetry/opentelemetry-cpp/pull/245)
-- [Prometheus utils function implementation](https://github.com/open-telemetry/opentelemetry-cpp/pull/250)
-- [Prometheus utils unit tests](https://github.com/open-telemetry/opentelemetry-cpp/pull/251)
-- [PrometheusCollector header and source files](https://github.com/open-telemetry/opentelemetry-cpp/pull/261)
-- [PrometheusCollector unit tests](https://github.com/open-telemetry/opentelemetry-cpp/pull/262)
-- [PrometheusExporter header, source, and tests](https://github.com/open-telemetry/opentelemetry-cpp/pull/263)
+- [Add PrometheusUtils and project building files](https://github.com/open-telemetry/opentelemetry-cpp/pull/280)
+- [Add PrometheusCollector](https://github.com/open-telemetry/opentelemetry-cpp/pull/282)
+- [Add PrometheusExporter](https://github.com/open-telemetry/opentelemetry-cpp/pull/263)
 
 ## Reference Documents
 - Designs for the API and SDK can be found in our [public documents repository](https://github.com/open-o11y/docs/tree/master/exporter/cpp-prometheus).
