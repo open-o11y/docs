@@ -180,6 +180,8 @@ for that subdirectory and add the test name to the list of test names in `foreac
 
 We have filed several issues to the metrics library for enhancements and problems discussion:
 
+- [Make Exporting Quantiles Configurable] (to be filed)
+- [Authentication and Authorization for Exposed HTTP Endpoint] (to be filed)
 - [C++ SDK creates invalid metrics label name records for Prometheus](https://github.com/open-telemetry/opentelemetry-cpp/issues/297)
 - [How-to install Prometheus Client in the C++ SDK CI Environment](https://github.com/open-telemetry/opentelemetry-cpp/issues/291)
 - [Recommendation on the number of quantile samples](https://github.com/open-telemetry/opentelemetry-cpp/issues/237)
