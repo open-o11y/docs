@@ -26,7 +26,8 @@
 - `PrometheusExporter` Class
     - This component provides an implementation of `MetricsExporter` interface for exporting data to Prometheus.
 - `PrometheusCollector` Class
-    - This component interacts with Prometheus backend. It temporarily holds metrics data collected by Metrics SDK, and serves data for Prometheus pull requests.
+    - This component interacts with Prometheus backend. It temporarily holds metrics data collected by Metrics SDK, 
+    and serves data for Prometheus pull requests.
 - `PrometheusExporterUtils` Class
     - This component contains all helper and util functions needed in the exporter.
 
@@ -44,17 +45,19 @@ translated data to the service.
 ![Data_Path_Diagram](./images/ExporterDataFlow.png)
 
 The entire Prometheus Exporter data pipeline can be split into a producer side and a consumer side. The producer side starts from the 
-Controller in the metrics SDK. Metrics SDK collects and pre-processes metric data and calls the `Export()` function in the `PrometheusExporter` class 
+[`Controller`](https://github.com/open-telemetry/opentelemetry-cpp/blob/master/sdk/include/opentelemetry/sdk/metrics/controller.h) 
+in the metrics SDK. Metrics SDK collects and pre-processes metric data and calls the `Export()` function in the `PrometheusExporter` class 
 to send data to exporters. This process is described in details in (link to blog post). Then the `PrometheusExporter` passes the same batch of data 
 to `PrometheusCollector` by calling the `AddMetricsData()` function. `PrometheusCollector` receives the batch, and temporarily stores data 
 in an in-memory collection. `PrometheusExporter` also exposes an HTTP endpoint and waits for Prometheus pull requests to scrape data from the collection. 
 
 The consumer side starts with a Prometheus pull request. Prometheus server first sends a pull request to the HTTP endpoint we exposed. 
-The HTTP server defines a `Collectable` interface, and it has a registry inside. Every class that implements the `Collectable` interface 
-can register itself to the HTTP server, and then the HTTP server will scan all registered components to scrapes data from them. Our 
-`PrometheusCollector` is such a class, so the Prometheus server will find our collector in the registry and call the `Collect()` function. 
-`PrometheusCollector` will fetch all data from the intermediate collection, call helper functions in `PrometheusExporterUtils` class to 
-parse the data to the structure that is acceptable by Prometheus, and serve the parsed result.
+The HTTP server defines a [`Collectable`](https://github.com/jupp0r/prometheus-cpp/blob/master/core/include/prometheus/collectable.h) 
+interface, and it has a registry inside. Every class that implements the `Collectable` interface can register itself to the HTTP server, 
+and then the HTTP server will scan all registered components to scrapes data from them. Our `PrometheusCollector` is such a class, so the Prometheus 
+server will find our collector in the registry and call the `Collect()` function. `PrometheusCollector` will fetch all data from the 
+intermediate collection, call helper functions in `PrometheusExporterUtils` class to parse the data to the structure that is acceptable 
+by Prometheus, and serve the parsed result.
 
 
 ## Usage
@@ -73,7 +76,7 @@ In order to run an example program to test the Prometheus Exporter, you can setu
     ```
 2. Initialize a PrometheusExporter instance with the address.
     ```
-    PrometheusExporter exporter{address}
+    PrometheusExporter exporter{address};
     ```
 3. Keep generating metrics data in a while loop, so that the sample program will keep running until shutdown manually.
     ```C++
@@ -101,8 +104,8 @@ In order to run an example program to test the Prometheus Exporter, you can setu
 
 ## Repository Structure
 **Interface**
-- Metric Exporter interface is defined in `sdk/include/opentelemetry/sdk/metrics`.
-- Metric Record that is exported is defined in `sdk/include/opentelemetry/sdk/metrics`.
+- `MetricExporter` interface is defined in `sdk/include/opentelemetry/sdk/metrics`.
+- Metric `Record` that is exported is defined in `sdk/include/opentelemetry/sdk/metrics`.
 
 **Prometheus Exporter Implementation**
 - All header files are located in the folder `exporters/prometheus/include/opentelemetry/exporters/prometheus`.
@@ -133,8 +136,8 @@ These two frameworks are applied around the repo and make it easy to run tests.
     - For example, these commands will build and execute the the test named `prometheus_collector_test` in the `exporters/prometheus/test` directory
         - `bazel build //exporters/prometheus:prometheus_collector_test`
         - `bazel-bin/exporters/prometheus/test/prometheus_collector_test`
-* Additionally, all Bazel tests can be ran in a Docker container by navigating to the root of the directory and executing the command:
-    * `./ci/run_docker.sh ./ci/do_ci.sh bazel.test`
+- Additionally, all Bazel tests can be ran in a Docker container by navigating to the root of the directory and executing the command:
+    - `./ci/run_docker.sh ./ci/do_ci.sh bazel.test`
 
 **To Add Tests:**
 
@@ -145,7 +148,7 @@ An example target taken from this file is shown below.
 
 ![Bazel BUILD](./images/BazelBuild.png)
 
-Integrating Google Tests with bazel is as simple as creating a target with:
+Integrating Google Tests with Bazel is as simple as creating a target with:
 - ***name***: The target name, namely the name of the binary to build
 - ***srcs***: The source file containing the tests
 - ***deps***: The dependencies of the build; 
@@ -170,7 +173,7 @@ file in the root of the project directory, and a `CMakeLists.txt` for each subdi
 and `CMAKE_CXX_STANDARD` are set, the project name is set with `project()`, directories are included and subdirectories added, and much more. However, 
 more importantly, in the context of Google Test within the OTel CPP repo, the `CMakeLists.txt` to look at is the one located in the directory your 
 tests are being written in; for this example, it’s `opentelemetry-cpp/exporters/prometheus`. This 
-[CMakeLists.txt] (add link later when PR is merged) file describes the names of the tests to be added as executables.
+[CMakeLists.txt](https://github.com/open-telemetry/opentelemetry-cpp/blob/master/exporters/prometheus/test/CMakeLists.txt) file describes the names of the tests to be added as executables.
 
 ![CMakeLists.txt](./images/CMakeFile.png)
 
