@@ -19,15 +19,16 @@
 
 ### Prometheus Exporter Architecture
 - `MetricsExporter` Interface
-    - This component defines the basic behaviors of a metric exporter.
-- `PrometheusExporter` Class
-    - This component provides an implementation of `MetricsExporter` for exporting data to Prometheus.
-- `PrometheusCollector` Class
-    - This component interacts with Prometheus backend. It collects and serves data for Prometheus pull requests.
-- `PrometheusExporterUtils` Class
-    - This component contains all helper and utils functions needed in the exporter.
+    - This component defines the basic behaviors of a metric exporter implemented by all metrics exporters.
 - `ReturnCode` Class
-    - This component defines export status code.
+    - This component enumerates all export status codes.
+- `PrometheusExporter` Class
+    - This component provides an implementation of `MetricsExporter` interface for exporting data to Prometheus.
+- `PrometheusCollector` Class
+    - This component interacts with Prometheus backend. It temporarily holds metrics data collected by Metrics SDK, and serves data for Prometheus pull requests.
+- `PrometheusExporterUtils` Class
+    - This component contains all helper and util functions needed in the exporter.
+
 
 ### Prometheus Exporter Data Path
 #### Exporter
@@ -38,8 +39,21 @@ The exact purpose of an exporter depends on which service we are exporting to bu
 must translate OpenTelemetry data to a target data type supported by the backend service, then send that 
 translated data to the service.
 
-#### Inside Prometheus Exporter
+#### Inside the Prometheus Exporter
 ![Data_Path_Diagram](./images/ExporterDataFlow.png)
+
+The entire Prometheus Exporter data pipeline can be split into a producer side and a consumer side. The producer side starts from the 
+Controller in the metrics SDK. Metrics SDK collects and pre-processes metric data and calls the `Export()` function in the `PrometheusExporter` class 
+to send data to exporters. This process is described in details in (link to blog post). Then the `PrometheusExporter` passes the same batch of data 
+to `PrometheusCollector` by calling the `AddMetricsData()` function. `PrometheusCollector` receives the batch, and temporarily stores data 
+in an in-memory collection. `PrometheusExporter` also exposes an HTTP endpoint and waits for Prometheus pull requests to scrape data from the collection. 
+
+The consumer side starts with a Prometheus pull request. Prometheus server first sends a pull request to the HTTP endpoint we exposed. 
+The HTTP server defines a `Collectable` interface, and it has a registry inside. Every class that implements the `Collectable` interface 
+can register itself to the HTTP server, and then the HTTP server will scan all registered components to scrapes data from them. Our 
+`PrometheusCollector` is such a class, so the Prometheus server will find our collector in the registry and call the `Collect()` function. 
+`PrometheusCollector` will fetch all data from the intermediate collection, call helper functions in `PrometheusExporterUtils` class to 
+parse the data to the structure that is acceptable by Prometheus, and serve the parsed result.
 
 
 ## Usage
@@ -82,7 +96,7 @@ In order to run an example program to test the Prometheus Exporter, you can setu
        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
     ```
-4. A more complete usage example can be found [here] (add link later).
+4. A more complete usage example can be found [here] (add link later after example program is merged to master).
 
 ## Repository Structure
 **Interface**
@@ -164,24 +178,30 @@ for that subdirectory and add the test name to the list of test names in `foreac
 
 ## Outstanding Tasks
 
-We have filed several issues for enhancements to the metrics library:
+We have filed several issues to the metrics library for enhancements and problems discussion:
 
+- [C++ SDK creates invalid metrics label name records for Prometheus](https://github.com/open-telemetry/opentelemetry-cpp/issues/297)
+- [How-to install Prometheus Client in the C++ SDK CI Environment](https://github.com/open-telemetry/opentelemetry-cpp/issues/291)
 - [Recommendation on the number of quantile samples](https://github.com/open-telemetry/opentelemetry-cpp/issues/237)
 - [Mapping OpenTelemetry MinMaxSumCount aggregator to Prometheus Gauge metric](https://github.com/open-telemetry/opentelemetry-cpp/issues/228)
 - [Adding a Google Test Demo Document](https://github.com/open-telemetry/opentelemetry-cpp/issues/170)
+- [Design Discussion on the Intermediate Storage of Prometheus Exporter](https://github.com/open-telemetry/opentelemetry-cpp/issues/159)
+- [Data structure usage for intermediate storage in Prometheus Exporter](https://github.com/open-telemetry/opentelemetry-cpp/issues/158)
 - [Prometheus Exporter HTTP Server Support](https://github.com/open-telemetry/opentelemetry-cpp/issues/138)
 
-## Pull Requests Filed (and to be merged)
+## Pull Requests
+- [Add Prometheus Exporter Example Program] (To be filed, add link later)
+- [Modify KvToString() Method in Instrument.h to Allow Valid Label Names in Records For Prometheus](https://github.com/open-telemetry/opentelemetry-cpp/pull/298)
 - [MetricsExporter Interface](https://github.com/open-telemetry/opentelemetry-cpp/pull/240)
 - [Add PrometheusUtils and project building files](https://github.com/open-telemetry/opentelemetry-cpp/pull/280)
 - [Add PrometheusCollector](https://github.com/open-telemetry/opentelemetry-cpp/pull/282)
 - [Add PrometheusExporter](https://github.com/open-telemetry/opentelemetry-cpp/pull/263)
 
 ## Reference Documents
-- Designs for the API and SDK can be found in our [public documents repository](https://github.com/open-o11y/docs/tree/master/exporter/cpp-prometheus).
-- Design for the OStreamExporters can be found in our [public documents repository](https://github.com/open-o11y/docs).
+- Designs for the Prometheus Exporter can be found in our [public documents repository](./prometheus-exporter-design.md).
 - Pipeline testing instructions and scripts can be found in our [public C++ repository] (add link here later).
 - A simple usage example with explanation on the [OpenTelemetry C++ repository] (add link here later).
+- Learn more about Prometheus with official document [here](https://prometheus.io/docs/introduction/overview/).
 
 ## Contributors
 - [Cunjun Wang](https://github.com/CunjunWang)
