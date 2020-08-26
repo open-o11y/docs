@@ -10,6 +10,7 @@
    * [Bazel](#bazel)
    * [CMake](#cmake)
 * [Outstanding Tasks](#outstanding-tasks)
+* [Pull Requests](#pull-requests)
 * [Reference Doucments](#reference-documents)
 * [Contributors](#contributors)
 
