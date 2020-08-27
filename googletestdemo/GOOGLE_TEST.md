@@ -138,11 +138,9 @@ Additionally, all CMake tests can be ran in a Docker container by navigating to 
 
 ### Performance Benchmarking
 
-While Google Test itself does not provide performance benchmarking, Google Benchmark, a closely related tool, does. Follow the instructions [here](https://github.com/google/benchmark#installation) to download Google Benchmark using CMake. A basic usage example can be viewed [here](https://github.com/google/benchmark#usage), while a more in depth usage guide can be found [here](https://github.com/google/benchmark#user-guide). 
+While Google Test itself does not provide performance benchmarking, Google Benchmark, a closely related tool, does. Follow the instructions [here](https://github.com/google/benchmark#installation) to download Google Benchmark using CMake. A basic usage example can be viewed [here](https://github.com/google/benchmark#usage), while a more in depth usage guide can be found [here](https://github.com/google/benchmark#user-guide). Below is a snippet from the basic usage example that outlines the structure of a benchmarked routine. Generally, it is very similar to the Googletest unit testing structure and we can easily convert unit tests into benchmarked routines.
 
 ![benchmarkUsage](../images/benchmarkUsage.png)
-
-Generally, it is very similar to the Googletest unit testing structure and we can easily convert unit tests into benchmarked routines.
 
 A benchmark consists of a “benchmarked function” which takes a benchmark state as a parameter.  The library automatically decides how many iterations to run based on the duration of the first few run iterations.  This function is called directly underneath using the benchmark macro.  Finally, a call to BENCHMARK_MAIN() runs all benchmarks.  As a proof of concept, below is a unit test for the PrometheusCollector class into a benchmark:
 ```C++
@@ -202,6 +200,6 @@ BENCHMARK_MAIN();
 Output
 ![benchmarkPOC](../images/benchmarkPOC.png)
 
-OTel provides a bazel shortcut to build tests which can be seen in the following link: https://github.com/open-telemetry/opentelemetry-cpp/blob/573696f3fdc1fd85e24ac19860ae6f2345837a3e/bazel/otel_cc_benchmark.bzl. (https://github.com/open-telemetry/opentelemetry-cpp/blob/573696f3fdc1fd85e24ac19860ae6f2345837a3e/bazel/otel_cc_benchmark.bzl)This not only creates a benchmark executable, but a “smoketest” which runs each benchmark for one iteration.
+OTel provides a bazel shortcut to build tests which can be seen [here](https://github.com/open-telemetry/opentelemetry-cpp/blob/573696f3fdc1fd85e24ac19860ae6f2345837a3e/bazel/otel_cc_benchmark.bzl). This not only creates a benchmark executable, but a “smoketest” which runs each benchmark for one iteration.
 
 We can use benchmarking to measure performance of exporting, data translation, and collecting. Additionally, creating benchmarks for each component will help us determine which areas of the pipeline can be optimized further. 
