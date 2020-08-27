@@ -64,7 +64,17 @@ bazel-bin/path/to/package/target-name
 ```
 The first command builds the unit test with the given target name; the second runs the unit test.
 
+```C++
+bazel test //path/to/package:target-name
+```
+This command runs the above two commands at once, though you may get a message stating `There were tests whose specified size is too big` and they may not run without modifying some options.
+
 In the diagram shown, `bazel build //path/to/package:target-name` is `bazel build //sdk/test/trace:tracer_provider_test`, and `bazel-bin/path/to/package/target-name` is `bazel-bin/sdk/test/trace/tracer_provider_test`. The test builds successfully, and 1 out of 1 tests pass.
+
+Additionally, all Bazel tests can be ran in a Docker container by navigating to the root of the directory and executing the command:
+```
+./ci/run_docker.sh ./ci/do_ci.sh bazel.test
+```
 
 ### CMake
 
@@ -99,7 +109,16 @@ cmake .. // or cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=“-Werror —co
 make
 make test
 ```
-This will run all tests in the repo - note that this is how CMake is structured in OTel CPP.
+This will run all tests in the repo.
+
+To run tests individually, in terminal, navigate to the `build` directory and execute the following command:
+'''
+ctest -R <name_of_your_test>
+'''
+For example, this command will build and execute the test named TEST(Meter, CollectSyncInstruments) in the metrics library:
+'''
+ctest -R metrics.Meter.CollectSyncInstruments
+'''
 
 The second cmake option creates test coverage reports; these are able to be viewed using a tool like lcov (instructions to download [here](http://ltp.sourceforge.net/coverage/lcov.php)), and running the command
 ```C++
@@ -109,6 +128,12 @@ lcov --directory $PWD --capture --output-file coverage.info
 Below is a sample coverage.info file generated from lcov:
 
 ![image](../images/lcovReport.png)
+
+
+Additionally, all CMake tests can be ran in a Docker container by navigating to the root of the directory and executing the command:
+```
+./ci/run_docker.sh ./ci/do_ci.sh cmake.test
+```
 
 ### Performance Benchmarking
 
