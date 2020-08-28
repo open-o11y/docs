@@ -49,7 +49,7 @@ The entire Prometheus Exporter data pipeline can be split into a producer side a
 in the metrics SDK. Metrics SDK collects and pre-processes metric data and calls the `Export()` function in the `PrometheusExporter` class 
 to send data to exporters. This process is described in details in (link to blog post). Then the `PrometheusExporter` passes the same batch of data 
 to `PrometheusCollector` by calling the `AddMetricsData()` function. `PrometheusCollector` receives the batch, and temporarily stores data 
-in an in-memory collection. `PrometheusExporter` also exposes an HTTP endpoint and waits for Prometheus pull requests to scrape data from the collection. 
+in an in-memory collection. `PrometheusExporter` also exposes an HTTP endpoint and waits for Prometheus pull requests to scrape data from the collection. Note that there are six instruments and six aggregators in the C++ Metrics SDK, but there is not a one to one mapping of instruments to aggregators. That means only two aggregators are mapped to from these six instrument types used to collect metric data. As a result, current usage of the C++ Metrics SDK does not allow for all six aggregators to be used, and subsequently affects the diversity of data that can be exported.
 
 The consumer side starts with a Prometheus pull request. Prometheus server first sends a pull request to the HTTP endpoint we exposed. 
 The HTTP server defines a [`Collectable`](https://github.com/jupp0r/prometheus-cpp/blob/master/core/include/prometheus/collectable.h) 
