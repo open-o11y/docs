@@ -21,7 +21,7 @@
 ### Prometheus Exporter Architecture
 - `MetricsExporter` Interface
     - This component defines the basic behaviors of a metric exporter implemented by all metrics exporters.
-- `ReturnCode` Class
+- `ExportResult` Class
     - This component enumerates all export status codes.
 - `PrometheusExporter` Class
     - This component provides an implementation of `MetricsExporter` interface for exporting data to Prometheus.
@@ -34,9 +34,8 @@
 
 ### Prometheus Exporter Data Path
 #### Exporter
-- The position the exporter lies in the metric SDK and the data pipeline before the exporter is shown 
-[here](../../cpp-metrics/README.md#sdk-data-path).
-- The exporter should receive a batch of aggregated and filtered records that are ready for export. 
+The position the exporter lies in the metric SDK and the data pipeline before the exporter is shown 
+[here](../../cpp-metrics/README.md#sdk-data-path). The exporter should receive a batch of aggregated and filtered records that are ready for export. 
 The exact purpose of an exporter depends on which service we are exporting to but generally the exporter 
 must translate OpenTelemetry data to a target data type supported by the backend service, then send that 
 translated data to the service.
@@ -47,7 +46,7 @@ translated data to the service.
 The entire Prometheus Exporter data pipeline can be split into a producer side and a consumer side. The producer side starts from the 
 [`Controller`](https://github.com/open-telemetry/opentelemetry-cpp/blob/master/sdk/include/opentelemetry/sdk/metrics/controller.h) 
 in the metrics SDK. Metrics SDK collects and pre-processes metric data and calls the `Export()` function in the `PrometheusExporter` class 
-to send data to exporters. This process is described in details in (link to blog post). Then the `PrometheusExporter` passes the same batch of data 
+to send data to exporters. Then, the `PrometheusExporter` passes the same batch of data 
 to `PrometheusCollector` by calling the `AddMetricsData()` function. `PrometheusCollector` receives the batch, and temporarily stores data 
 in an in-memory collection. `PrometheusExporter` also exposes an HTTP endpoint and waits for Prometheus pull requests to scrape data from the collection. Note that there are six instruments and six aggregators in the C++ Metrics SDK, but there is not a one to one mapping of instruments to aggregators. That means only two aggregators are mapped to from these six instrument types used to collect metric data. As a result, current usage of the C++ Metrics SDK does not allow for all six aggregators to be used, and subsequently affects the diversity of data that can be exported.
 
@@ -184,8 +183,8 @@ for that subdirectory and add the test name to the list of test names in `foreac
 
 We have filed several issues to the metrics library for enhancements and problems discussion:
 
-- [Make Exporting Quantiles Configurable] (to be filed)
-- [Authentication and Authorization for Exposed HTTP Endpoint] (to be filed)
+- [Make Exporting Quantiles Configurable](https://github.com/open-telemetry/opentelemetry-cpp/issues/259) (filed previously)
+- [Authentication and Authorization for Exposed HTTP Endpoint](https://github.com/open-telemetry/opentelemetry-cpp/issues/307)
 - [C++ SDK creates invalid metrics label name records for Prometheus](https://github.com/open-telemetry/opentelemetry-cpp/issues/297)
 - [How-to install Prometheus Client in the C++ SDK CI Environment](https://github.com/open-telemetry/opentelemetry-cpp/issues/291)
 - [Recommendation on the number of quantile samples](https://github.com/open-telemetry/opentelemetry-cpp/issues/237)
@@ -196,12 +195,12 @@ We have filed several issues to the metrics library for enhancements and problem
 - [Prometheus Exporter HTTP Server Support](https://github.com/open-telemetry/opentelemetry-cpp/issues/138)
 
 ## Pull Requests
-- [Add Prometheus Exporter Example Program] (To be filed, add link later)
-- [Modify KvToString() Method in Instrument.h to Allow Valid Label Names in Records For Prometheus](https://github.com/open-telemetry/opentelemetry-cpp/pull/298)
 - [MetricsExporter Interface](https://github.com/open-telemetry/opentelemetry-cpp/pull/240)
 - [Add PrometheusUtils and project building files](https://github.com/open-telemetry/opentelemetry-cpp/pull/280)
 - [Add PrometheusCollector](https://github.com/open-telemetry/opentelemetry-cpp/pull/282)
 - [Add PrometheusExporter](https://github.com/open-telemetry/opentelemetry-cpp/pull/263)
+- [Modify KvToString() Method in Instrument.h to Allow Valid Label Names in Records For Prometheus](https://github.com/open-telemetry/opentelemetry-cpp/pull/298)
+- [Add Prometheus Exporter Example Program] (To be filed, add link later)
 
 ## Reference Documents
 - Designs for the Prometheus Exporter can be found in our [public documents repository](./prometheus-exporter-design.md).
