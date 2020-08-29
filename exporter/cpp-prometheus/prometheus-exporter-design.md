@@ -460,54 +460,7 @@ problem. A possible solution could be to add a new status like `FAILURE_FULL` to
 
 
 ### `ReturnCodes` Class
-This class provides an expansion on the possible return codes for the `export()` function. Currently, only `SUCCESS` and `FAILURE` are available 
-as return codes; so we plan to expand the `FAILURE` codes and specifying what type of `FAILURE` it is. This class is influenced by [this](https://github.com/open-telemetry/opentelemetry-cpp/blob/master/api/include/opentelemetry/trace/canonical_code.h) 
-implementation for spans; similar to this implementation, `ReturnCodes` will be implemented as an enum class.
-
-#### Success
-On a successful export, the return code is `SUCCESS`.
-
-#### Failures
-On a failed export, multiple types of failure codes will be available. 
-- `FAILURE_FULL_COLLECTION` is returned when the collection does not have enough space to receive the export batch. 
-- `FAILURE_TIMEOUT` is returned when the export has taken too long to execute and has timed out. 
-- `FAILURE_INVALID_ARGUMENT` is returned when `export()` is passed an invalid argument (e.g., not a proper collection of records).
-- `FAILURE_ALREADY_SHUTDOWN` is returned when the exporter is shutdown.
-
-#### Proposed Design & Implementation
-```C++
-/**
- * Return Codes Class
- */
- enum class ReturnCodes : uint8_t
- {
-    /**
-     * Batch exported successfully.
-     */
-    SUCCESS = 0;
-    
-    /**
-     * The collection does not have enough space to receive the export batch.
-     */
-    FAILURE_FULL_COLLECTION = 1;
-    
-    /**
-     * The export has timed out.
-     */
-    FAILURE_TIMEOUT = 2;
-    
-    /**
-     * The export() function was passed an invalid argument.
-     */
-    FAILURE_INVALID_ARGUMENT = 3;
-    
-    /**
-     * The exporter is already shutdown.
-     */
-    FAILURE_ALREADY_SHUTDOWN = 4;
- };
-```
-
+This class has been converted into codes in the `ExportResult class`. See above for more details.
 
 ### `PrometheusExporterUtils` Class
 This class contains all helper methods that will be called by the `collect()`, in order to separate the responsibilities and make the 
