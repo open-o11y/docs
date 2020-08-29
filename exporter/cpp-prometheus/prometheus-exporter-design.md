@@ -107,13 +107,42 @@ We also include a diagram to illustrate flow of data within the exporter.
 
 ![image](./images/ExporterDataFlow.png)
 
-### `MetricsExporter` Class (Interface)
-This class is an interface that defines all basic behaviors of an exporter. In C++, there is already a similar class for exporting tracing spans, 
-but there is no such a class for metrics data. We design this class (interface) according to the [SpanExporter](https://github.com/open-telemetry/opentelemetry-cpp/blob/master/sdk/include/opentelemetry/sdk/trace/exporter.h) 
-in the repository. Ideally, this interface can also be used by other metrics exporter, not only for Prometheus.
+### `MetricsExporter` Class (Interface) and `ExportResult` class
+This class is an interface that defines all basic behaviors of an exporter. In C++, a pre-existing [MetricsExporter](https://github.com/open-telemetry/opentelemetry-cpp/blob/master/sdk/include/opentelemetry/sdk/metrics/exporter.h) Interface exists, and we only plan to add more ExportResults while leaving the interface the same. Below, `kSuccess` and `kFailure` already exist, and we plan to add `kFailureFull`, `kFailureTimeout`, and `kFailureInvalidArgument`. This interface is to be used by other metrics exporters as well, such as the [OStreamMetricsExporter](https://github.com/open-telemetry/opentelemetry-cpp/blob/master/exporters/ostream/include/opentelemetry/exporters/ostream/metrics_exporter.h), and not only for Prometheus.
+
 ```C++
 /**
- * Base Metrics Exporter Interface
+ * ExportResult is returned as result of exporting a batch of records.
+ */
+enum class ExportResult
+{
+  /**
+   * Batch was successfully exported.
+   */
+  kSuccess = 0,
+  /**
+   * Exporting failed. The caller must not retry exporting the same batch; the
+   * batch must be dropped.
+   */
+  kFailure = 1,
+
+  /**
+   * The collection does not have enough space to receive the export batch.
+   */
+  kFailureFull = 2,
+
+  /**
+   * The export has timed out.
+   */
+  kFailureTimeout = 3,
+
+  /**
+   * The export() function was passed an invalid argument.
+   */
+  kFailureInvalidArgument = 4,  
+};
+/**
+ * Existing base Metrics Exporter Interface
  */
 class MetricsExporter {
 public:
@@ -121,15 +150,13 @@ public:
      * Exports a batch of Metric Records. The behavior will be decided in the 
      * implementation.
      */
-    ReturnCodes export(Collection<Record> records);
-    
+    ExportResult Export(Collection<Record> &records);
+
     /**
-     * Shut down the exporter.
-     *
-     * Timeout an optional timeout, the default timeout of 0 
-     * means that no timeout is applied.
+     * In the Metrics specification, there is no Shutdown function required for exporters
+     * The Shutdown function can be implemented within exporters that wish to have one,
+     * but will not be enforced through this header
      */
-    void shutdown(timeout);
 }
 ```
 
@@ -145,6 +172,7 @@ a data structure called `metricsToCollect` in the `PrometheusCollector` (will be
 
 #### Shut down the exporter
 `shutdown()` function should be implemented to shutdown the exporter. The detailed behavior is not determined yet.
+
 ```C++
 /*
  * Prometheus metric exporter for OpenTelemetry.
@@ -153,15 +181,16 @@ class PrometheusExporter : public MetricsExporter {
     /**
      * Constructor. 
      */
-    PrometheusExporter(Exposer exposer) {
+    PrometheusExporter(std::string &address) {
         // 1. Initialize and set a PrometheusCollector
-        // 2. Register this collector (collectable) to exposer
+        // 2. Register the exporter to an exposer at the given address
+        // 3. Binds to a PrometheusCollector instance
     }
 
     /*
      * Implement the export function in the interface
      */
-    ReturnCodes export(Collection<Record> records) {
+    ExportResult Export(Collection<Record> &records) {
         if (!this.isShutdown) {
             // 1. Add the input records to the data stucture inside the collector.
             // 2. Return ExportResult
@@ -174,30 +203,23 @@ class PrometheusExporter : public MetricsExporter {
      * Implement the shutdown function in the interface
      * Shut the exporter down. 
      */
-    void shutdown() {
+    void Shutdown() {
         // Behavior not determined yet.
         // Do something like unregister the collector, some gc...
         this.isShutdown = true;
     }
     
     /*
-     * Set the Prometheus collector with the parameter.
-     */ 
-    void setCollector(PrometheusCollector collector) {
-    
-    }
-    
-    /*
      * Get the Prometheus collector.
      */
-    PrometheusCollector getCollector() {
+    PrometheusCollector *GetCollector() {
     
     }
 
     /**
      * Get shutdown status
      */
-    boolean isShutdown() {
+    boolean IsShutdown() {
         return this.isShutdown;
     }
 
@@ -210,7 +232,12 @@ private:
     /*
      * PrometheusCollector instance
      */
-    PrometheusCollector collector;
+    PrometheusCollector *collector;
+
+    /**
+     * Exposer instance
+     */
+    Exposer *exposer;
 }
 ```
 
@@ -255,7 +282,7 @@ public:
     /**
      * Default Constructor
      */
-    PrometheusCollector() {
+    PrometheusCollector(int maxCollectionSize = 2048) {
         // Initialize the collection for metrics to export
         // in this class with default capacity
     }
@@ -277,7 +304,7 @@ public:
      *
      * This function may also need a lock.
      */
-    void addMetricData(Collection<Record> records) {
+    void AddMetricData(Collection<Record> &records) {
         // 1. The Controller calls export() function to send 
         //    processed metrics data,
         // 2. export() function then calls this function to add
@@ -287,8 +314,14 @@ public:
     /*
      * Get the current collection in the collector.
      */ 
-    Collection<Record> getCollection() {
+    Collection<Record> GetCollection() {
     
+    }
+    /**
+     * Gets the maximum size of the collection.
+     */
+    int GetMaxCollectionSize() {
+
     }
  
 private:
@@ -296,8 +329,13 @@ private:
      * Collection of metrics data from the export() function,
      * and to be export to user when they send a pull request.
      */
-    Collection<Record> metricsToCollect;
-    
+    Collection<Record> *metricsToCollect;
+
+    /**
+     * Maximum size of the metricsToCollect collection.
+     */
+    int maxCollectionSize;
+
     /*
      * Lock when operating the collection
      */
@@ -556,14 +594,15 @@ exposer.RegisterCollectable(exporter);
 
 In our OpenTelemetry version, the demo program could be
 ```C++
-// create an http server running on port 8080
-prometheus::Exposer exposer{"127.0.0.1:8080"};
+// name the address+port the server will be running on
+std::string address = "127.0.0.1:8080";
 
 // create an exporter and register the collector in it to exposer
 // Inside the PrometheusExporter constructor:
 // 1. Initialize a PrometheusCollector
-// 2. Register the collector to exposer
-auto exporter = PrometheusExporter(exposer);
+// 2. Initialize an exposer
+// 3. Register the collector to exposer
+auto exporter = PrometheusExporter(address);
 ```
 
 Consider the existing, working OpenCensus project, and the drawbacks of supporting an HTTP server in our exporter manually, we recommend **NOT** 
