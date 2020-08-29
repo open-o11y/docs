@@ -100,7 +100,7 @@ In order to run an example program to test the Prometheus Exporter, you can setu
        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
     ```
-4. A more complete usage example can be found [here] (add link later after example program is merged to master).
+4. A more complete usage example can be found [here](https://github.com/open-o11y/opentelemetry-cpp/tree/cpp-prometheus-exporter-07122020/examples/prometheus_exporter).
 
 ## Repository Structure
 **Interface**
@@ -205,8 +205,8 @@ We have filed several issues to the metrics library for enhancements and problem
 
 ## Reference Documents
 - Designs for the Prometheus Exporter can be found in our [public documents repository](./prometheus-exporter-design.md).
-- Pipeline testing instructions and scripts can be found in our [public C++ repository] (add link here later).
-- A simple usage example with explanation on the [OpenTelemetry C++ repository] (add link here later).
+- Pipeline testing instructions and scripts can be found in our [team public C++ repository](https://github.com/open-o11y/opentelemetry-cpp/tree/cpp-prometheus-exporter-07122020/exporters/prometheus/test).
+- A simple usage example with explanation on the [OpenTelemetry C++ repository](https://github.com/open-o11y/opentelemetry-cpp/tree/cpp-prometheus-exporter-07122020/examples/prometheus_exporter).
 - Learn more about Prometheus with official document [here](https://prometheus.io/docs/introduction/overview/).
 
 ## Contributors
