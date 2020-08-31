@@ -10,6 +10,7 @@
    * [Bazel](#bazel)
    * [CMake](#cmake)
 * [Outstanding Tasks](#outstanding-tasks)
+    * [Future Enhancements](#future-enhancements)
 * [Pull Requests](#pull-requests)
 * [Reference Documents](#reference-documents)
 * [Contributors](#contributors)
@@ -191,7 +192,7 @@ We have filed several issues to the metrics library for enhancements and problem
 - [Data structure usage for intermediate storage in Prometheus Exporter](https://github.com/open-telemetry/opentelemetry-cpp/issues/158)
 - [Prometheus Exporter HTTP Server Support](https://github.com/open-telemetry/opentelemetry-cpp/issues/138)
 
-## Future Enhancements
+### Future Enhancements
 - [Make Exporting Quantiles Configurable](https://github.com/open-telemetry/opentelemetry-cpp/issues/259) (filed previously)
 - [Authentication and Authorization for Exposed HTTP Endpoint](https://github.com/open-telemetry/opentelemetry-cpp/issues/307)
 
@@ -201,7 +202,7 @@ We have filed several issues to the metrics library for enhancements and problem
 - [Add PrometheusCollector](https://github.com/open-telemetry/opentelemetry-cpp/pull/282)
 - [Add PrometheusExporter](https://github.com/open-telemetry/opentelemetry-cpp/pull/263)
 - [Modify KvToString() Method in Instrument.h to Allow Valid Label Names in Records For Prometheus](https://github.com/open-telemetry/opentelemetry-cpp/pull/298)
-- [Add Prometheus Exporter Example Program] (To be filed, add link later)
+- [Add Prometheus Exporter Example Program](https://github.com/open-telemetry/opentelemetry-cpp/pull/310)
 
 ## Reference Documents
 - Designs for the Prometheus Exporter can be found in our [public documents repository](./prometheus-exporter-design.md).
