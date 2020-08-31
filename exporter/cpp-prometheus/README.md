@@ -180,11 +180,8 @@ This is how a `CMakeLists.txt` file will be written with the purpose of unit tes
 for that subdirectory and add the test name to the list of test names in `foreach()`.
 
 ## Outstanding Tasks
-
 We have filed several issues to the metrics library for enhancements and problems discussion:
 
-- [Make Exporting Quantiles Configurable](https://github.com/open-telemetry/opentelemetry-cpp/issues/259) (filed previously)
-- [Authentication and Authorization for Exposed HTTP Endpoint](https://github.com/open-telemetry/opentelemetry-cpp/issues/307)
 - [C++ SDK creates invalid metrics label name records for Prometheus](https://github.com/open-telemetry/opentelemetry-cpp/issues/297)
 - [How-to install Prometheus Client in the C++ SDK CI Environment](https://github.com/open-telemetry/opentelemetry-cpp/issues/291)
 - [Recommendation on the number of quantile samples](https://github.com/open-telemetry/opentelemetry-cpp/issues/237)
@@ -193,6 +190,10 @@ We have filed several issues to the metrics library for enhancements and problem
 - [Design Discussion on the Intermediate Storage of Prometheus Exporter](https://github.com/open-telemetry/opentelemetry-cpp/issues/159)
 - [Data structure usage for intermediate storage in Prometheus Exporter](https://github.com/open-telemetry/opentelemetry-cpp/issues/158)
 - [Prometheus Exporter HTTP Server Support](https://github.com/open-telemetry/opentelemetry-cpp/issues/138)
+
+## Future Enhancements
+- [Make Exporting Quantiles Configurable](https://github.com/open-telemetry/opentelemetry-cpp/issues/259) (filed previously)
+- [Authentication and Authorization for Exposed HTTP Endpoint](https://github.com/open-telemetry/opentelemetry-cpp/issues/307)
 
 ## Pull Requests
 - [MetricsExporter Interface](https://github.com/open-telemetry/opentelemetry-cpp/pull/240)
