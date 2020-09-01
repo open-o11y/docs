@@ -25,3 +25,21 @@ The design docuement and README can be found in upstream repository.
 
 The Exporter receives a pdata.Metrics from the pipeline, converts the metrics to
 TimeSeries, and sends them in a snappy-compressed message via HTTP to Cortex.
+
+## Repository Structure
+See this [link](https://github.com/open-telemetry/opentelemetry-collector/tree/master/exporter/prometheusremotewriteexporter)
+
+## Outstanding Tasks
+
+We have filed several issues for enhancements to the Exporter:
+
+- List issues
+- here
+
+## Pull Requests Filed and Merged
+
+## Reference Documents
+
+## Contributors
+
+- [Yang Hu](https://github.com/huyan0)
