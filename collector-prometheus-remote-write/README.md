@@ -13,7 +13,7 @@
 
 ## Architecture Overview
 The design docuement and README can be found in upstream repository. 
-![Exporter UML Diagram](./images/exporter-uml.png)
+![Exporter UML Diagram](./img/exporter-uml.png)
 
 ### Data Path
 
@@ -21,7 +21,7 @@ The design docuement and README can be found in upstream repository.
 
 #### Exporter Data Path
 
-![SDK Metrics Collection Pipeline](./images/exporter-sequence.png)
+![exporter-data-pipeline Pipeline](./img/exporter-sequence.png)
 
 The Exporter receives a pdata.Metrics from the pipeline, converts the metrics to
 TimeSeries, and sends them in a snappy-compressed message via HTTP to Cortex.
