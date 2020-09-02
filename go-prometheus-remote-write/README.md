@@ -2,15 +2,22 @@
 
 ## Table of Contents
 
-- [Architecture Overview](#architecture-overview)
-  - [Data Path](#data-path)
-- [Usage](#usage)
-- [Repository Structure](#repository-structure)
-- [Testing](#testing)
-- [Oustanding Tasks](#oustanding-tasks)
-- [Pull Requests Filed and Merged](#pull-requests-filed-and-merged)
-- [Reference Documents](#reference-documents)
-- [Contributors](#contributors)
+- [OpenTelemetry Go SDK Prometheus Remote Write Exporter](#opentelemetry-go-sdk-prometheus-remote-write-exporter)
+  - [Table of Contents](#table-of-contents)
+  - [Architecture Overview](#architecture-overview)
+    - [Data Path](#data-path)
+      - [OpenTelemetry SDK Data Path](#opentelemetry-sdk-data-path)
+      - [Exporter Data Path](#exporter-data-path)
+  - [Usage](#usage)
+    - [1. Configure the Exporter](#1-configure-the-exporter)
+    - [2. Setting up an Exporter](#2-setting-up-an-exporter)
+    - [3. Set up backend](#3-set-up-backend)
+  - [Repository Structure](#repository-structure)
+  - [Testing](#testing)
+  - [Future Enhancements](#future-enhancements)
+  - [Pull Requests Filed and Merged](#pull-requests-filed-and-merged)
+  - [Reference Documents](#reference-documents)
+  - [Contributors](#contributors)
 
 ## Architecture Overview
 
@@ -41,7 +48,15 @@ TimeSeries, and sends them in a snappy-compressed message via HTTP to Cortex.
 
 ### 1. Configure the Exporter
 
-> TODO: Explain configuration
+The Exporter can be configured with a variety of settings as shown below. Defaults are
+provided for most of the settings, but the endpoint must be set or else the Exporter will
+not run. While not necessary, users may want to add extra histogram buckets or
+distribution quantiles with the `HistogramBoundaries` and `Quantiles` settings.
+
+For authentication, the exporter provides two options: basic authentication with a
+username/password as well as bearer token authentication. Users can also configure TLS by
+supplying certificates. There is also an option to provide a custom HTTP client in case
+the user wants to add custom authentication or customize the HTTP Client settings.
 
 ```go
 type Config struct {
@@ -81,7 +96,8 @@ if err != nil {
 
 Users can setup the Exporter with the `InstallNewPipeline` function. It requires the `Config` struct
 created in the first step and returns a push Controller that will periodically collect and push
-data.
+data. Users can also use an optional `WithPeriod(time.Duration)` as a parameter in
+`InstallNewPipeline()` to set a custom push interval. The default interval is 10 seconds.
 
 Example:
 
@@ -101,6 +117,8 @@ Set up your desired backend, like Cortex, and start receiving data from the Expo
 ## Repository Structure
 
 - `cortex/`
+  - `auth.go`
+  - `auth_test.go`
   - `cortex.go`
   - `cortex_test.go`
   - `testutil_test.go`
@@ -128,18 +146,57 @@ Set up your desired backend, like Cortex, and start receiving data from the Expo
     - `README.md`
   - `pipeline/`
     - Will include info on E2E testing
-  - TODO: Include authentication info
 
 ## Testing
 
-- How to run tests
+The exporter can be tested using the standard Go testing library. Here are different ways
+to run the tests from the terminal:
 
-## Outstanding Tasks
+```bash
+# Run all tests in x_test.go files.
+go test
 
-We have filed several issues for enhancements to the Exporter:
+# Run a specific test (X is the name of the test)
+go test -run X 
 
-- List issues
-- here
+# Run a specific test and store the cpu profile in cpu.prof
+ go test -run X -cpuprofile cpu.prof
+
+# Run a specific test and store the memory profile in mem.prof
+ go test -run X -memprofile mem.prof
+```
+
+Users can check the cpu / memory profiles by using the `pprof` tool:
+
+```bash
+# Open pprof tool
+go tool pprof cortex.test cpu.prof
+
+# Check top 20 nodes that used the most cpu time
+top 20
+```
+
+The exporter also provides two pipeline tests for validating the exporter. They can be
+found on our team's public `opentelemetry-go-contrib` fork on the `pipeline` branch
+[here](https://github.com/open-o11y/opentelemetry-go-contrib/tree/pipeline/exporters/metric/cortex/pipeline).
+Instructions for running the two pipeline tests are located in the README.
+
+
+## Future Enhancements
+
+We have documented several future enhancements:
+
+- Adding tests for histogram buckets and distribution quantiles
+- Improving ValidCheckpointSet tests in `cortex_test.go`
+  - Update `getValidCheckpointSet` to generate more records of different types
+  - Update `wantValidCheckpointSet`
+  - Update `wantLength`
+- Add code coverage to project with a badge
+- Increase configuration by allowing users to choose selectors
+- Update tests to use new tests package from this [pull request](https://github.com/open-telemetry/opentelemetry-go/pull/1040)
+- Refactor `CreateLabelSet` to use `KeyValue` structs from the `labels` package
+
+
 
 ## Pull Requests Filed and Merged
 
@@ -150,7 +207,7 @@ We have filed several issues for enhancements to the Exporter:
 - [Add distribution and histogram #237](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/237)
 - [Cortex example project #238](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/238)
 - [Authentication Implementation and Timestamp fix #246](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/246)
-
+- [Fix Panic Issue in MutualTLS Test #315](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/315)
 ## Reference Documents
 
 Designs for the Exporter can be found in our
