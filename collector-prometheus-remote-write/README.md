@@ -68,8 +68,8 @@ Buckets #21, Count: 0
 Buckets #22, Count: 0
 Buckets #23, Count: 0
 Buckets #24, Count: 0
-**Buckets #25, Count: 0
-**ExplicitBounds #0: 0.000100
+Buckets #25, Count: 0
+ExplicitBounds #0: 0.000100
 ExplicitBounds #1: 0.000150
 ExplicitBounds #2: 0.000225
 ExplicitBounds #3: 0.000338
@@ -125,13 +125,21 @@ When combining vanilla Go errors, `consumererror.partial` and `consumererror.per
 
 Collector:
 [_Add Prometheus Remote Write Exporter supporting Cortex - conversion and export for scalar OTLP metrics_](https://github.com/open-telemetry/opentelemetry-collector/pull/1577)
+
 [_Add Prometheus Remote Write Exporter supporting Cortex - conversion and export for Summary OTLP metrics_](https://github.com/open-telemetry/opentelemetry-collector/pull/1649)
+
 [_Add Prometheus Remote Write Exporter supporting Cortex - conversion and export for Histogram OTLP metrics_](https://github.com/open-telemetry/opentelemetry-collector/pull/1643)
+
 [_Add Prometheus Remote Write Exporter supporting Cortex - helper_](https://github.com/open-telemetry/opentelemetry-collector/pull/1555)
+
 [_Add a ‘Headers’ field in HTTPClientSettings_](https://github.com/open-telemetry/opentelemetry-collector/pull/1552)
+
 [_Add Prometheus Remote Write Exporter supporting Cortex - factory and config_](https://github.com/open-telemetry/opentelemetry-collector/pull/1544)
+
 [_Add Cortex and Prometheus Remote Write exporter design_](https://github.com/open-telemetry/opentelemetry-collector/pull/1464)
+
 [_Change some Prometheus remote write exporter functions to public and update link to design in README.md_](https://github.com/open-telemetry/opentelemetry-collector/pull/1702)
+
 [_Refactor the Prometheus remote write exporter to use OTLP v0.5.0_](https://github.com/open-telemetry/opentelemetry-collector/pull/1708) 
 
 
