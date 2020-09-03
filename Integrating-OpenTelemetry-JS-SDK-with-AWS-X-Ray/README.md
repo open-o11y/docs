@@ -178,21 +178,25 @@ Note that this result of example usage verify the pipeline and prove the correct
 After exhaustive discussion, OpenTelemetry-JS team decided not to host any vendor-specific `IdGenerator` and `Propagator` component, so we need to build a repository of AWS own. There are several JavaScript specific things need to be mentioned here:
  The standard file structure for each package should looks like:
 
-opentelemetry-id-generator-aws-xray
 
- |
 
- |----------src----------XXX.ts
+​	opentelemetry-id-generator-aws-xray
 
- |----------test----------XXX.test.ts
+ 	|
 
- |----------package.json && package-lock.json
+ 	|----------src----------XXX.ts
 
- |----------tsconfig.json
+​	 |----------test----------XXX.test.ts
 
- |----------eslintrc.js
+ 	|----------package.json && package-lock.json
 
- |----------karma.conf.js
+​	 |----------tsconfig.json
+
+​	 |----------eslintrc.js
+
+​	 |----------karma.conf.js
+
+
 
 
 
