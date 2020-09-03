@@ -66,7 +66,7 @@ As shown in the diagram above, the components with yellow frames are what I buil
     X-Amzn-Trace-Id: Root=1-5759e988-bd862e3fe1be46a994272793;Parent=53995c3f42cd8ad8;Sampled=1
     ```
 
-* AWS X-Ray Plugins Resources Detectors
+* AWS X-Ray Plugin Resource Detectors
   * As name indicates, used to detect resource information
   * When trying to use this, user should first detect resource and then instrument `TracerProvider` with the detected resource information
 
@@ -171,19 +171,30 @@ Corresponding result in AWS X-Ray Console:
 
 ![AWS X-Ray Console](images/result.png)
 
+Note that this result of example usage verify the pipeline and prove the correctness of integration test.
+
 ## Repository Structure
 
 After exhaustive discussion, OpenTelemetry-JS team decided not to host any vendor-specific `IdGenerator` and `Propagator` component, so we need to build a repository of AWS own. There are several JavaScript specific things need to be mentioned here:
  The standard file structure for each package should looks like:
 
- opentelemetry-id-generator-aws-xray
+opentelemetry-id-generator-aws-xray
+
  |
+
  |----------src----------XXX.ts
+
  |----------test----------XXX.test.ts
+
  |----------package.json && package-lock.json
+
  |----------tsconfig.json
+
  |----------eslintrc.js
+
  |----------karma.conf.js
+
+
 
 `src&&test`
  Like in all other languages, `src` is the folder to hold source code and `test` is the folder to hold corresponding test code.
@@ -371,11 +382,15 @@ We have filed several issues for enhancements to the OpenTelemetry JS SDK:
 
 ## Reference Documents
 
-Designs for all components can be found in our [public documents repository](https://github.com/open-o11y/docs/tree/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray).
+* Designs for all components can be found in our [public documents repository](https://github.com/open-o11y/docs/tree/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray).
 
-Unit testing instructions and scripts can be found in our [aws-opentelemetry-js](https://github.com/open-o11y/aws-opentelemetry-js).
+* Unit testing instructions and scripts can be found in our [aws-opentelemetry-js](https://github.com/open-o11y/aws-opentelemetry-js).
 
-A simple usage example with explanation on the [Example Demo](https://github.com/open-o11y/aws-opentelemetry-js/examples).
+* A simple usage example with explanation on the [Example Demo](https://github.com/open-o11y/aws-opentelemetry-js/examples).
+
+* Source Code for AWS X-Ray Plugin Resource Detectors: [Resource Detectors](https://github.com/open-telemetry/opentelemetry-js/tree/master/packages/opentelemetry-resource-detector-aws)
+
+* Source Code for AWS X-Ray IdGenerator and Propagator: [IdGenerator and Propagator(Private now)](https://github.com/open-o11y/aws-opentelemetry-js)
 
 ## Contributors
 * [Cong Zou](https://github.com/EdZou)
