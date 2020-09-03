@@ -373,8 +373,6 @@ We have filed several issues for enhancements to the OpenTelemetry JS SDK:
 
 Designs for all components can be found in our [public documents repository](https://github.com/open-o11y/docs/tree/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray).
 
-Implementation details can also be found in our [public documents repository](https://github.com/open-o11y/docs/tree/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray).
-
 Unit testing instructions and scripts can be found in our [aws-opentelemetry-js](https://github.com/open-o11y/aws-opentelemetry-js).
 
 A simple usage example with explanation on the [Example Demo](https://github.com/open-o11y/aws-opentelemetry-js/examples).
