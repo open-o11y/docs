@@ -71,7 +71,7 @@ and its intructions is provide [here](./test)
 
 
 ## Future Enhancement
-The following are a list of upstream issues future contributor to the exporter can work on:
+The following are a list of upstream issues future contributor to the exporter and the collector project can work on:
 
 - [Prometheus Receiver Generates one more bucket than bound](https://github.com/open-telemetry/opentelemetry-collector/issues/1737)
 
