@@ -1,7 +1,5 @@
 # Prometheus Remote Write Exporter
 
-# OpenTelemetry Go SDK Prometheus Remote Write Exporter
-
 ## Table of Contents
 
 - [Architecture Overview](#architecture-overview)
@@ -37,9 +35,9 @@ been fixed, and the exporter works with the Prometheus receiver now. See this is
 Another uncertainty regarding metric format is that the OTLP metrics definition is still in alpha; when a change in OTLP metric happens and the data format inside the collector is updated,
 the exporter code will need to be refactored. Bogdan Drutu((at)bogdandrutu) from Splunk is in charge of this process and the metric side of the
 collector. See this [repository](https://github.com/open-telemetry/opentelemetry-proto) for updates on OTLP and this [PR](https://github.com/open-telemetry/opentelemetry-collector/pull/1708) for a sample code refactoring that was done for the exporter.
-## AWS Sig V4 Support 
+## AWS Sig v4 Support 
 
-[This repository]((https://github.com/open-o11y/opentelemetry-collector-o11y)) hosts a version of the exporter that supports AWS sig v4. A executable can be built from the repository.
+[This repository]((https://github.com/open-o11y/opentelemetry-collector-o11y) hosts a version of the exporter that supports AWS sig v4. A executable can be built from the repository.
 It has detailed design, README, and Pipeline testing instructions.  
 
 ## Integration Testing
@@ -63,7 +61,7 @@ A Cortex instance can be used as a remote write backend. Instructions for settin
 
 A Grafana instance can be used to visualize the metrics received by Cortex. To run a Grafana in docker, use the following command:
 ```
-docker run --rm -d --name*=*grafana -p 3000:3000 grafana/grafana
+docker run --rm -d --name=grafana -p 3000:3000 grafana/grafana
 ```
 
 In the Grafana UI (http://localhost:3000/) (username/password admin/admin), add a Prometheus datasource for Cortex (http://URL:9009/api/prom).
@@ -103,10 +101,6 @@ Collector:
 - [_Change some Prometheus remote write exporter functions to public and update link to design in README.md_](https://github.com/open-telemetry/opentelemetry-collector/pull/1702)
 
 - [_Refactor the Prometheus remote write exporter to use OTLP v0.5.0_](https://github.com/open-telemetry/opentelemetry-collector/pull/1708) 
-
-
-
-
 
 OTEPS:
 - [_Proposal: OTLP Exporters Support for Configurable Export Behavior_](https://github.com/open-telemetry/oteps/pull/131)
