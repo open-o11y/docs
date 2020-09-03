@@ -30,7 +30,7 @@ See this [link](https://github.com/open-telemetry/opentelemetry-collector/tree/m
 ## Metric Translation and Possible Changes
 The collector supports both OpenTelemetry Protocol(OTLP) Metrics and the OpenCensus Metrics(OC) internally. When the a component in the data pipeline uses OpenCensus format, the collector
 translates the OC metrics to OTLP metrics for the consumption of the remote write exporter. This translation was broken because temporality wasn't converted correctly. However, this issue has
-been fixed, and the exporter works with the Prometheus receiver now. See this [issue](https://github.com/open-telemetry/opentelemetry-collector/issues/1541) for more detail (https://github.com/open-telemetry/opentelemetry-collector/issues/1541)
+been fixed, and the exporter works with the Prometheus receiver now. See this [issue](https://github.com/open-telemetry/opentelemetry-collector/issues/1541) for more detail
 
 Another uncertainty regarding metric format is that the OTLP metrics definition is still in alpha; when a change in OTLP metric happens and the data format inside the collector is updated,
 the exporter code will need to be refactored. Bogdan Drutu((at)bogdandrutu) from Splunk is in charge of this process and the metric side of the
