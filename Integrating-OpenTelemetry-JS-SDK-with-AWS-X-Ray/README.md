@@ -180,23 +180,21 @@ After exhaustive discussion, OpenTelemetry-JS team decided not to host any vendo
 
 
 
-​	opentelemetry-id-generator-aws-xray
+​    opentelemetry-id-generator-aws-xray
 
- 	|
+​     |
 
- 	|----------src----------XXX.ts
+​     |----------src----------XXX.ts
 
-​	 |----------test----------XXX.test.ts
+​     |----------test----------XXX.test.ts
 
- 	|----------package.json && package-lock.json
+​     |----------package.json && package-lock.json
 
-​	 |----------tsconfig.json
+​     |----------tsconfig.json
 
-​	 |----------eslintrc.js
+​     |----------eslintrc.js
 
-​	 |----------karma.conf.js
-
-
+​     |----------karma.conf.js
 
 
 
