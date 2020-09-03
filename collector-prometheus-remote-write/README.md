@@ -35,6 +35,10 @@ been fixed, and the exporter works with the Prometheus receiver now. See this [i
 Another uncertainty regarding metric format is that the OTLP metrics definition is still in alpha; when a change in OTLP metric happens and the data format inside the collector is updated,
 the exporter code will need to be refactored. Bogdan Drutu((at)bogdandrutu) from Splunk is in charge of this process and the metric side of the
 collector. See this [repository](https://github.com/open-telemetry/opentelemetry-proto) for updates on OTLP and this [PR](https://github.com/open-telemetry/opentelemetry-collector/pull/1708) for a sample code refactoring that was done for the exporter.
+
+Finally, current OTLP metric definition does not support summary. When the OTLP metric definition is updated and summary
+is included, the conversion for summary metrics needs to be added to the collector. See this umerged PR for more [detail](https://github.com/open-telemetry/opentelemetry-collector/pull/1649)
+
 ## AWS Sig v4 Support 
 
 [This repository](https://github.com/open-o11y/opentelemetry-collector-o11y) hosts a version of the exporter that supports AWS sig v4. A executable can be built from the repository.
@@ -81,12 +85,13 @@ The following are a list of upstream issues future contributor to the exporter a
 
 - [Prometheus Receiver translates metrics to OTLP metrics with non-cumulative temporality](https://github.com/open-telemetry/opentelemetry-collector/issues/1541)
 
+- [Add Prometheus Remote Write Exporter supporting Cortex - conversion and export for Summary OTLP metrics](https://github.com/open-telemetry/opentelemetry-collector/pull/1649)
+
 ## Pull Requests Filed and Merged
 
 Collector:
 - [_Add Prometheus Remote Write Exporter supporting Cortex - conversion and export for scalar OTLP metrics_](https://github.com/open-telemetry/opentelemetry-collector/pull/1577)
 
-- [_Add Prometheus Remote Write Exporter supporting Cortex - conversion and export for Summary OTLP metrics_](https://github.com/open-telemetry/opentelemetry-collector/pull/1649)
 
 - [_Add Prometheus Remote Write Exporter supporting Cortex - conversion and export for Histogram OTLP metrics_](https://github.com/open-telemetry/opentelemetry-collector/pull/1643)
 
