@@ -30,14 +30,14 @@ See this [link](https://github.com/open-telemetry/opentelemetry-collector/tree/m
 ## Metric Translation and Possible Changes
 The collector supports both OpenTelemetry Protocol(OTLP) Metrics and the OpenCensus Metrics(OC) internally. When the a component in the data pipeline uses OpenCensus format, the collector
 translates the OC metrics to OTLP metrics for the consumption of the remote write exporter. This translation was broken because temporality wasn't converted correctly. However, this issue has
-been fixed, and the exporter works with the Prometheus receiver now. See this issue for more [detail]((https://github.com/open-telemetry/opentelemetry-collector/issues/1541))
+been fixed, and the exporter works with the Prometheus receiver now. See this [issue](https://github.com/open-telemetry/opentelemetry-collector/issues/1541) for more detail (https://github.com/open-telemetry/opentelemetry-collector/issues/1541)
 
 Another uncertainty regarding metric format is that the OTLP metrics definition is still in alpha; when a change in OTLP metric happens and the data format inside the collector is updated,
 the exporter code will need to be refactored. Bogdan Drutu((at)bogdandrutu) from Splunk is in charge of this process and the metric side of the
 collector. See this [repository](https://github.com/open-telemetry/opentelemetry-proto) for updates on OTLP and this [PR](https://github.com/open-telemetry/opentelemetry-collector/pull/1708) for a sample code refactoring that was done for the exporter.
 ## AWS Sig v4 Support 
 
-[This repository]((https://github.com/open-o11y/opentelemetry-collector-o11y) hosts a version of the exporter that supports AWS sig v4. A executable can be built from the repository.
+[This repository](https://github.com/open-o11y/opentelemetry-collector-o11y) hosts a version of the exporter that supports AWS sig v4. A executable can be built from the repository.
 It has detailed design, README, and Pipeline testing instructions.  
 
 ## Integration Testing
