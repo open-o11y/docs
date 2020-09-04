@@ -178,25 +178,16 @@ Note that this result of example usage verify the pipeline and prove the correct
 After exhaustive discussion, OpenTelemetry-JS team decided not to host any vendor-specific `IdGenerator` and `Propagator` component, so we need to build a repository of AWS own. There are several JavaScript specific things need to be mentioned here:
  The standard file structure for each package should looks like:
 
-
-
-​    opentelemetry-id-generator-aws-xray
-
-​     |
-
-​     |----------src----------XXX.ts
-
-​     |----------test----------XXX.test.ts
-
-​     |----------package.json && package-lock.json
-
-​     |----------tsconfig.json
-
-​     |----------eslintrc.js
-
-​     |----------karma.conf.js
-
-
+```
+opentelemetry-id-generator-aws-xray
+     |
+     |----------src----------XXX.ts
+     |----------test----------XXX.test.ts
+     |----------package.json && package-lock.json
+     |----------tsconfig.json
+     |----------eslintrc.js
+     |----------karma.conf.js
+```
 
 `src&&test`
  Like in all other languages, `src` is the folder to hold source code and `test` is the folder to hold corresponding test code.
@@ -227,6 +218,10 @@ After exhaustive discussion, OpenTelemetry-JS team decided not to host any vendo
 
 `karma.conf.js`
  Karma is a console tool for running tests, which can track source code changes and display the percentage of code tests coverage. It is adjusted using the configuration file `karma.conf.js`, where the paths to tested files and to the files with tests should be specified.
+
+For instance, here is one of the practical file structure of `AwsXRayPropagator`
+
+![file structure](images/FileStructure.png)
 
 ## Testing
 
