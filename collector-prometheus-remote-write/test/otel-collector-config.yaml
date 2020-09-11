@@ -1,0 +1,31 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+exporters:
+  cortex:
+    endpoint: "http://aps-workspaces-beta.us-west-2.amazonaws.com/workspaces/yang-yu-intern-test-ws/remote_write"
+    namespace: ""
+    aws_auth:
+      enabled: true
+      region: "us-west-2"
+      service: "aps"
+      debug: true
+    timeout: 10s
+  logging:
+    loglevel: debug
+
+
+extensions:
+  health_check:
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      exporters: [logging,cortex]

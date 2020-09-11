@@ -1,0 +1,50 @@
+metricName03081,summary,label1 value1 label2 value2 label3 value3 label4 value4 ,4059 2081 0.686823 0.065637 0.156519 
+metricName13081,counter,label1 value1 ,694
+metricName23081,summary,label1 value1 label2 value2 label3 value3 ,89 4728 0.468890 0.283034 0.293102 
+metricName33081,gauge,label1 value1 label2 value2 label3 value3 ,495
+metricName43081,histogram,label1 value1 ,3287 9252 1258 3047 4947 
+metricName53081,counter,label1 value1 label2 value2 label3 value3 ,3015
+metricName63081,gauge,label1 value1 ,2387
+metricName73081,summary,label1 value1 label2 value2 ,356 1737 0.059121 0.692025 0.301523 
+metricName83081,gauge,label1 value1 label2 value2 label3 value3 ,194
+metricName93081,summary,label1 value1 label2 value2 ,4147 4078 0.282081 0.788605 0.361805 
+metricName103081,gauge,label1 value1 label2 value2 ,2189
+metricName113081,summary,label1 value1 ,3705 2888 0.681078 0.241515 0.311522 
+metricName123081,summary,label1 value1 label2 value2 label3 value3 ,2605 156 0.182925 0.428357 0.896992 
+metricName133081,histogram,label1 value1 label2 value2 label3 value3 label4 value4 ,4002 6685 746 1563 4376 
+metricName143081,histogram,label1 value1 label2 value2 label3 value3 label4 value4 ,2996 4134 94 1577 2463 
+metricName153081,counter,label1 value1 label2 value2 label3 value3 label4 value4 ,953
+metricName163081,gauge,label1 value1 label2 value2 ,4241
+metricName173081,summary,label1 value1 label2 value2 ,3643 3891 0.669575 0.622728 0.369693 
+metricName183081,histogram,label1 value1 label2 value2 label3 value3 label4 value4 ,4843 4995 2940 1503 552 
+metricName193081,gauge,label1 value1 label2 value2 label3 value3 ,2425
+metricName203081,summary,label1 value1 label2 value2 label3 value3 label4 value4 ,4757 3687 0.830534 0.000514 0.736069 
+metricName213081,histogram,label1 value1 ,3582 10242 3098 3553 3591 
+metricName223081,counter,label1 value1 label2 value2 ,4267
+metricName233081,gauge,label1 value1 label2 value2 label3 value3 label4 value4 ,894
+metricName243081,histogram,label1 value1 label2 value2 label3 value3 ,1270 8126 3981 2079 2066 
+metricName253081,gauge,label1 value1 label2 value2 label3 value3 ,4819
+metricName263081,gauge,label1 value1 ,2175
+metricName273081,gauge,label1 value1 label2 value2 label3 value3 ,1387
+metricName283081,gauge,label1 value1 ,2818
+metricName293081,counter,label1 value1 label2 value2 label3 value3 label4 value4 ,1224
+metricName303081,summary,label1 value1 ,1532 3616 0.392216 0.589383 0.929612 
+metricName313081,summary,label1 value1 ,3640 2351 0.491607 0.957954 0.797209 
+metricName323081,summary,label1 value1 label2 value2 ,90 1602 0.190033 0.739826 0.654041 
+metricName333081,histogram,label1 value1 label2 value2 label3 value3 ,4208 6387 2822 1223 2342 
+metricName343081,summary,label1 value1 ,1166 3710 0.570852 0.512782 0.684175 
+metricName353081,histogram,label1 value1 label2 value2 ,3430 11825 4415 4371 3039 
+metricName363081,gauge,label1 value1 ,1359
+metricName373081,counter,label1 value1 label2 value2 label3 value3 label4 value4 ,870
+metricName383081,counter,label1 value1 label2 value2 label3 value3 label4 value4 ,3010
+metricName393081,gauge,label1 value1 label2 value2 label3 value3 ,1829
+metricName403081,counter,label1 value1 ,1756
+metricName413081,summary,label1 value1 label2 value2 label3 value3 ,1200 4456 0.780754 0.092118 0.053495 
+metricName423081,gauge,label1 value1 label2 value2 label3 value3 ,320
+metricName433081,summary,label1 value1 label2 value2 label3 value3 ,3447 292 0.092970 0.645833 0.311886 
+metricName443081,counter,label1 value1 label2 value2 label3 value3 ,3756
+metricName453081,summary,label1 value1 label2 value2 label3 value3 label4 value4 ,1157 3652 0.319331 0.499385 0.400432 
+metricName463081,summary,label1 value1 label2 value2 ,1393 3470 0.887448 0.236327 0.765008 
+metricName473081,counter,label1 value1 ,3922
+metricName483081,gauge,label1 value1 label2 value2 ,60
+metricName493081,counter,label1 value1 label2 value2 label3 value3 label4 value4 ,2954

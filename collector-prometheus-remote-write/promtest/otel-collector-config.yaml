@@ -1,0 +1,25 @@
+receivers:
+  prometheus:
+   config:
+     scrape_configs:
+       - job_name: 'prometheus_receiver'
+         metrics_path: "/metrics/1"
+         scrape_interval: 10s
+         static_configs:
+           - targets: ['0.0.0.0:8080']
+
+  otlp:
+    protocols:
+       grpc:
+exporters:
+  prometheusremotewrite:
+    endpoint: "http://ec2-18-217-33-170.us-east-2.compute.amazonaws.com:9009/api/prom/push"
+    namespace: demo
+  logging:
+    loglevel: debug
+
+service:
+  pipelines:
+    metrics:
+      receivers: [prometheus]
+      exporters: [logging,prometheusremotewrite]
