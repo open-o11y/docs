@@ -46,6 +46,10 @@ TimeSeries, and sends them in a snappy-compressed message via HTTP to Cortex.
 
 ## Usage
 
+See the main project
+[README](https://github.com/open-telemetry/opentelemetry-go-contrib/blob/master/exporters/metric/cortex/README.md)
+for more detail.
+
 ### 1. Configure the Exporter
 
 The Exporter can be configured with a variety of settings as shown below. Defaults are
@@ -179,24 +183,15 @@ top 20
 The exporter also provides two pipeline tests for validating the exporter. They can be
 found on our team's public `opentelemetry-go-contrib` fork on the `pipeline` branch
 [here](https://github.com/open-o11y/opentelemetry-go-contrib/tree/pipeline/exporters/metric/cortex/pipeline).
-Instructions for running the two pipeline tests are located in the README.
+Instructions for running the two pipeline tests are located in the pipeline package's
+[README](https://github.com/open-o11y/opentelemetry-go-contrib/blob/pipeline/exporters/metric/cortex/pipeline/README.md).
 
 
 ## Future Enhancements
 
 We have documented several future enhancements:
-
-- Adding tests for histogram buckets and distribution quantiles
-- Improving ValidCheckpointSet tests in `cortex_test.go`
-  - Update `getValidCheckpointSet` to generate more records of different types
-  - Update `wantValidCheckpointSet`
-  - Update `wantLength`
-- Add code coverage to project with a badge
-- Increase configuration by allowing users to choose selectors
-- Update tests to use new tests package from this [pull request](https://github.com/open-telemetry/opentelemetry-go/pull/1040)
-- Refactor `CreateLabelSet` to use `KeyValue` structs from the `labels` package
-
-
+- Add configuration option for different selectors
+  Users may not want to use the default Histogram selector and should be able to choose which selector they want to use.
 
 ## Pull Requests Filed and Merged
 
@@ -208,13 +203,19 @@ We have documented several future enhancements:
 - [Cortex example project #238](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/238)
 - [Authentication Implementation and Timestamp fix #246](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/246)
 - [Fix Panic Issue in MutualTLS Test #315](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/315)
+- [Add Enhancements and Fixes #326](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/326)
+- [Documentation Updates #333](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/333)
+- [Restore auth_test for 386 builds #334](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/334)
+- [Add design doc and future enhancements #339](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/339)
+
 ## Reference Documents
 
 Designs for the Exporter can be found in our
 [public documents repository](https://github.com/open-o11y/docs/blob/master/exporter/go-prometheus-remote-write/design-doc.md).
 
-A simple usage example with explanation can be found on the
-[OpenTelemetry Go SDK Contribution repository](https://github.com/open-telemetry/opentelemetry-go-contrib/tree/master/exporters/metric/cortex/example)
+A simple usage example with an explanation can be found on the [OpenTelemetry Go SDK
+Contribution
+repository](https://github.com/open-telemetry/opentelemetry-go-contrib/tree/master/exporters/metric/cortex/example)
 
 ## Contributors
 
