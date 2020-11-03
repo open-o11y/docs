@@ -72,10 +72,9 @@ Along with the following data types:
 * `LogRecord` is a struct that will store the [10 fields](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/logs/data-model.md#log-and-event-record-definition) of a log record, defined by the Log Data Model. 
 * `Severity` is an enum that will initially store the [24 built-in severity levels](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/logs/data-model.md#displaying-severity), defined by the Log Data Model. The naming of the Severity fields follow the [Google naming convention](https://google.github.io/styleguide/cppguide.html#Enumerator_Names). The default severity if unspecified is set to `kInfo`, following the convention of ILogger. 
 
+The following UML diagram shows the relationship between all  the classes in the logging library. The leftmost components (in blue and yellow) shows the API component relevant to this document:
 
-The following UML diagram shows the relationship between the classes for the API:
-
-![API UML](../images/Logging-API-UML.png)
+![API UML](../images/Complete-Logging-UML.png)
 
 **Example Usage**
 The user would interact with the API as follows:
