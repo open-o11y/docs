@@ -1,4 +1,4 @@
-# Logging API and SDK Design for the OpenTelemetry C++ Library [draft]
+# Logging API and SDK Design for the OpenTelemetry C++ Library
 
 ## **Introduction**
 
