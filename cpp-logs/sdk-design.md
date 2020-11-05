@@ -139,6 +139,7 @@ The processor is responsible for sending the `LogRecord`s it receives for export
 
 **UML Diagram**
 Each processor should be associated with a single, unique exporter instance (i.e. a 1:1 relationship).  An exporter must be passed to the Processor constructor during initialization of a processor. The exporter is then kept as a unique pointer in a private field of the Processor instance.
+
 ![Processor UML](../images/Logging-SDK-UML-2.png)
 
 ### `LogProcessor` class (interface) 
@@ -232,8 +233,8 @@ class SimpleLogProcessor : public LogProcessor
 * Pseudocode for ForceFlush() and ShutDown() methods will use same logic and implementation for traces, so will not be repeated here. A brief description can be seen in Appendix A. 
 
 **Pseudocode**
-
-* class BatchLogProcessor : public LogProcessor 
+```
+class BatchLogProcessor : public LogProcessor 
     
         /**
         * Creates a batch log processor by configuring the specified exporter and other parameters
@@ -308,10 +309,11 @@ class SimpleLogProcessor : public LogProcessor
         private atomic<long long> numFailedExports = 0;  
         private enum reasonFailed {DroppedLogRecord, ExporterFailure, QueueFull, ExporterTimeout));
     }
-
+```
 ## Exporter 
 
 **UML Diagram**
+
 ![Exporter UML](../images/Logging-SDK-Exporter-UML.png)
 
 ### **`LogExporter`** class (interface)
@@ -386,4 +388,5 @@ Following the OpenTelemetry project conventions, we will be using [GoogleTest](h
 ## Related Issues/PRs
 
 [[1] Logging API Initial commit (#378)](https://github.com/open-telemetry/opentelemetry-cpp/pull/378)
+
 [[2] RFC Logging Statements (#356)](https://github.com/open-telemetry/opentelemetry-cpp/issues/356)
