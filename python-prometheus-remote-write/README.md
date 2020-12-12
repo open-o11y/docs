@@ -111,15 +111,15 @@ exporter = PrometheusRemoteWriteMetricsExporter(
 The exporter provides two forms of authentication which are shown below. Users
 can add their own custom authentication by setting the appropriate values in the `headers` dictionary
 
-1. Basic Authentication
-Basic authentication sets a HTTP Authorization header containing a base64 encoded username/password pair. See [RFC 7617](https://tools.ietf.org/html/rfc7617) for more information. This
+1. Basic Authentication: 
+Basic authentication sets a HTTP Authorization header containing a base64 encoded username/password pair. See [RFC 7617](https://tools.ietf.org/html/rfc7617) for more information.
 
 ```python
 exporter = PrometheusRemoteWriteMetricsExporter(
     basic_auth={"username": "base64user",  "password": "base64pass"}
 )
 ```
-2. Bearer Token Authentication
+2. Bearer Token Authentication: 
 This custom configuration can be achieved by passing in a custom `header` to
 the constructor. See [RFC 6750](https://tools.ietf.org/html/rfc6750) for more information.
 
@@ -142,12 +142,9 @@ Users can add TLS to the exporter's HTTP Client by providing certificate and key
 * ValueObserver
 
 ## Error Handling
-In general, errors are raised by the calling function. The exception is for
-failed requests where any error status code is logged as a
-warning instead.
+In general, errors are raised by the calling function. The exception is for failed requests where any error status code is logged as a warning instead.
 
-This is because the exporter does not implement any retry logic
-as it sends cumulative metrics data. This means that data will be preserved even if some exports fail.
+This is because the exporter does not implement any retry logic as it sends cumulative metrics data. This means that data will be preserved even if some exports fail.
 
 For example, consider a situation where a user increments a Counter instrument 5 times and an export happens between each increment. If the exports happen like so:
 ```
@@ -158,7 +155,8 @@ Then the recieved data will be:
 ```
 1 4 5
 ```
-The end result is the same since the aggregations are cumulative
+The end result is the same since the aggregations are cumulative.
+
 ## Contributing
 
 This exporter's datapath is as follows:
@@ -167,11 +165,10 @@ This exporter's datapath is as follows:
 *Entites with `*` after their name are not actual classes but rather logical
 groupings of functions within the exporter.*
 
-If you would like to learn more about the exporter's structure and design decisions please view the design document below
+If you would like to learn more about the exporter's structure and design decisions please view the design document below.
 
 ### Design Doc
 
 [Design Document](https://github.com/open-o11y/docs/tree/master/python-prometheus-remote-write)
 
-This document is stored elsewhere as it contains large images which will
-significantly increase the size of this repo.
+This document is stored elsewhere as it contains large images which will significantly increase the size of this repo.
