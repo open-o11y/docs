@@ -2,14 +2,25 @@
 
 ## Table of Contents
 
-* [Architecture Overview](https://github.com/open-o11y/docs/blob/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray/README.md#architecture-overview)
-   * [Note on Conmponent Details](https://github.com/open-o11y/docs/blob/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray/README.md#note-on-component-details)
-* [Data Path](https://github.com/open-o11y/docs/blob/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray/README.md#data-path)
-* [Usage](https://github.com/open-o11y/docs/blob/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray/README.md#usage)
-* [Repository Structure](https://github.com/open-o11y/docs/blob/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray/README.md#repository-structure)
-* [Testing](https://github.com/open-o11y/docs/blob/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray/README.md#testing)
-* [Outstanding Tasks](https://github.com/open-o11y/docs/blob/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray/README.md#outstanding-tasks)
-* [Reference Doucments](https://github.com/open-o11y/docs/blob/master/Integrating-OpenTelemetry-JS-SDK-with-AWS-X-Ray/README.md#reference-documents)
+- [Integrating OpenTelemetry JS SDK With AWS X-Ray](#integrating-opentelemetry-js-sdk-with-aws-x-ray)
+  - [Table of Contents](#table-of-contents)
+  - [Architecture Overview](#architecture-overview)
+    - [Components](#components)
+    - [Data Path](#data-path)
+  - [Usage](#usage)
+  - [Repository Structure](#repository-structure)
+  - [Testing](#testing)
+    - [Unit Tests](#unit-tests)
+    - [Integration Testing](#integration-testing)
+      - [Step 1 - Configure AWS Credentials](#step-1---configure-aws-credentials)
+      - [Step 2 - Install and Start the OpenTelemetry Collector](#step-2---install-and-start-the-opentelemetry-collector)
+      - [Step 3 - Start JavaScript Sample Integration App](#step-3---start-javascript-sample-integration-app)
+      - [Step 4 - Run Integration Tests](#step-4---run-integration-tests)
+    - [Benchmarks](#benchmarks)
+  - [Future Enhancements](#future-enhancements)
+  - [Pull Requests Filed](#pull-requests-filed)
+  - [References](#references)
+  - [Contributors](#contributors)
 
 
 ## Architecture Overview
@@ -64,9 +75,17 @@
     X-Amzn-Trace-Id: Root=1-5759e988-bd862e3fe1be46a994272793;Parent=53995c3f42cd8ad8;Sampled=1
     ```
 
-* AWS X-Ray Plugin Resource Detectors
-  * As name indicates, used to detect resource information
-   When trying to use this, user should first detect resource and then instrument `TracerProvider` with the detected resource information
+* AWS X-Ray Resource Detectors
+  * > A `Resource` is an immutable representation of the entity producing telemetry. For example, a process producing telemetry that is running in a container on Kubernetes has a Pod name, it is in a namespace and possibly is part of a Deployment which also has a name. All three of these attributes can be included in the `Resource`. The primary purpose of resources as a first-class concept in the SDK is decoupling of discovery of resource information from exporters.
+
+  * To learn more about `resource` check out the [OpenTelemetry specifications page](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/resource/sdk.md).
+
+  * The objective of a resource detector is to provide information about the environment in which the process is running in. The resource detectors we implemeneted will first detect whether an application instrumented with OpenTelemetry Go SDK is running on the various environments: AWS Beanstalk, Amazon ECS, Amazon EKS, and Amazon EC2.
+  
+  * If the ECS resource detector successfully detects that a process is running on an ECS environment, it will populate the resource with metadata about the container the process is in. This will include the `containerID`(the docker ID of the container) and `hostName`(name of the container).
+  
+  * The ECS resource detector will return either an empty Resource or a Resource which is filled with metadata depending on if the application instrumented is running on the listed environments or not.
+
 
 ### Data Path
 
@@ -108,264 +127,116 @@ Note that the "Pipeline" here is the internal pipeline of OpenTelemetry Collecto
 
 ## Usage
 
-When integrating OpenTelemetry JS SDK with AWS X-Ray, user should do following:
-
-* Set propagator using our `AwsXRayPropagator`
-* Using Resource detectors to detect resource information and instrument `TracerConfig` with the detected resource
-* Instrument `TracerConfig` with our `AwsXRayIdGenerator`
-* Build a new `TracerProvider` using `TracerConfig` and  `NodeTracerProvider` class which use `AsyncHooksContextManager` automatically
-* Instrument the built `TracerProvider` with Processor and OTLP Exporter
-* Register this `TracerProvider`
-* Return a generated `Tracer` using `getTracer()` method
-
-E.g.
-
-```
-module.exports = (serviceName) => {
-  // set global propagator
-  propagation.setGlobalPropagator(new AwsXRayPropagator());
-
-  // currently have not been merged, will do it later
-  // get resource by take use of multiple detectors
-  const detectorConfig = {
-    detectors: [
-      // awsEcsDetector,
-      awsEc2Detector,
-      // awsBeanstalkDetector
-    ]
-  };
-  var resources;
-  detectResources(detectorConfig)
-    .then((res) => {
-      resources = res;
-      console.log("detected resource: " + JSON.stringify(resources));
-    })
-    .catch((e) => {console.log(e);});
-
-  // create a provider for activating and tracking with AWS IdGenerator
-  const tracerConfig = {
-    idGenerator: new AwsXRayIdGenerator(),
-    resources: resources
-  };
-  const tracerProvider = new NodeTracerProvider(tracerConfig);
-
-  // add OTLP exporter
-  const otlpExporter = new CollectorTraceExporter({
-    serviceName: serviceName,
-    protocolNode: CollectorProtocolNode.HTTP_PROTO,
-  });
-  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(otlpExporter));
-  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-
-  // Register the tracer
-  tracerProvider.register();
-
-  // Get a tracer
-  return trace.getTracer("awsxray-tests");
-}
-```
-
-Corresponding result in AWS X-Ray Console:
-
-![AWS X-Ray Console](images/result.png)
-
-Note that this result of example usage verify the pipeline and prove the correctness of integration test.
+See more information on how to get started in sending traces to AWS X-Ray using the JS SDK in the [getting started guide](https://aws-otel.github.io/docs/getting-started/js-sdk/trace-manual-instr).
 
 ## Repository Structure
 
-After exhaustive discussion, OpenTelemetry-JS team decided not to host any vendor-specific `IdGenerator` and `Propagator` component, so we need to build a repository of AWS own. There are several JavaScript specific things need to be mentioned here:
- The standard file structure for each package should looks like:
+Currently the components are seperated between the [core JS](https://github.com/open-telemetry/opentelemetry-js) and [aws-otel-js](https://github.com/aws-observability/aws-otel-js/) repos. There are issues we filed which are linked at the bottom of the README below to move all of them to the [OpenTelemetry-JS-contrib](https://github.com/open-telemetry/opentelemetry-js-contrib)
 
-```
-opentelemetry-id-generator-aws-xray
-     |
-     |----------src----------XXX.ts
-     |----------test----------XXX.test.ts
-     |----------package.json && package-lock.json
-     |----------tsconfig.json
-     |----------eslintrc.js
-     |----------karma.conf.js
-```
-
-`src&&test`
- Like in all other languages, `src` is the folder to hold source code and `test` is the folder to hold corresponding test code.
-
-`package.json && package-lock.json`
- package.json is a file which stores important information such as package name, description, author, license, dependencies and so on. Normally it will be built automatically by running `npm init` command. In our case, since we have a lot of common dependencies and scripts to define, we borrow most of code from opentelemetry-js repository.
- And basically, package-lock.json is used to optimize the installation process by allowing npm to skip repeated metadata resolutions for previously-installed packages.
-
-`tsconfig.json`
- The presence of a `tsconfig.json` file in a directory indicates that the directory is the root of a TypeScript project. The `tsconfig.json` file specifies the root files and the compiler options required to compile the project. In our case, the preference is shown below:
-
-```
-{
-  "extends": "../../tsconfig.base",
-  "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "build"
-  },
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ]
-}
-```
-
-`eslintrc.js`
- This is another custom-defined configuration file to check our coding style.
-
-`karma.conf.js`
- Karma is a console tool for running tests, which can track source code changes and display the percentage of code tests coverage. It is adjusted using the configuration file `karma.conf.js`, where the paths to tested files and to the files with tests should be specified.
-
-For instance, here is one of the practical file structure of `AwsXRayPropagator`
-
-![file structure](images/FileStructure.png)
 
 ## Testing
 
-There are several libraries we used in our testing we need to mention here:
+### Unit Tests
 
-**mocha**
+For testing, multiple libraries were used including: `lerna`, `nock`, `sinon`, and `mocha` library.
 
-Reference: https://www.bignerdranch.com/blog/why-do-javascript-test-frameworks-use-describe-and-beforeeach/
- With RSpec-style tests, we have an explicit API of methods/functions that you use to define tests, groups, and setup blocks. 
-`decribe()`
- This keyword is a nesting method, allows us to gather our tests into separate groupings within the same file.
- In JS, for unit tests it’s most common to have one test file per production class.
-
-`beforeEach()`
- This keywork provide a place to do setup for tested functionality. For instance, if we would like to test multiple result value (like an result instance), we may use beforeEach() to first setup and obtain the result instance and use it to test the value within the instance separately.
-`it()`
- tests are named with strings, not method names. This encourages using natural language for your test case names (`it('throws an exception when invalid input is provided')`), rather than an abbreviated method-name style (`function testInvalidInput`).
-
- The whole bunch of code will looks like:
-
+Here's how you can use the commands in terminal to run the tests:
+```bash
+npm install && npm run test
 ```
-describe('AwsXRaySpanId', () => {
-  let spanId1: string, spanId2: string;
-  beforeEach(() => {
-    spanId1 = idGenerator.generateSpanId();
-    spanId2 = idGenerator.generateSpanId();
-  });
+### Integration Testing
 
-  it('returns 16 character hex strings', () => {
-    assert.ok(spanId1.match(/[a-f0-9]{16}/));
-    assert.ok(!spanId1.match(/^0+$/));
-  });
+The integration tests consists of three parts:
+* [AWS Distro for OpenTelemetry Collector](https://github.com/aws-observability/aws-otel-collector)
+* [AWS OpenTelmetry Test Framework](https://github.com/aws-observability/aws-otel-test-framework)
+* [JavaScript Sample Integration app](https://github.com/aws-observability/aws-otel-js/tree/main/sample-apps)
 
-  it('returns different ids on each call', () => {
-    assert.notDeepStrictEqual(spanId1, spanId2);
-  });
+Follow the steps below to run the integration tests locally:
+
+#### Step 1 - Configure AWS Credentials
+You will need to configure your AWS Credential profile yet, please follow these [instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) for setting up your AWS credentials.
+#### Step 2 - Install and Start the OpenTelemetry Collector
+The first step is to install and start an instance of the AWS OpenTelemetry Collector. The purpose of the collector here is to export trace data to AWS X-Ray.
+```
+git clone https://github.com/aws-observability/aws-otel-collector.git ; \
+    cd aws-otel-collector; \
+    docker run --rm -p 55680:55680 -p 55679:55679 -p 8889:8888 \
+      -e AWS_REGION=us-west-2 \
+      -v "${PWD}/examples/config-test.yaml":/otel-local-config.yaml \
+      --name awscollector public.ecr.aws/aws-observability/aws-otel-collector:latest \
+      --config otel-local-config.yaml; \
 ```
 
-**nock**
-
-For our EC2 detector, since we are fetching the information from latest AWS instance identity documentation, the content could be dynamic, so directly connecting with real AWS documentation for testing purpose can be really dumb choice.
- Here, we choose to use `nock` library: https://github.com/nock/nock. Since it can mock backend and also mock the response when communicating. As shown below
-
+#### Step 3 - Start JavaScript Sample Integration App
+The second step is to start a sample HTTP server written in JavaScript. The purpose of the app is to generate traces and send them to AWS X-Ray so that we can validate the data.
 ```
-const scope = nock('http://myapp.iriscouch.com')
-  .get('/users/1')
-  .reply(404)
-  .post('/users', {
-    username: 'pgte',
-    email: 'pedro.teixeira@gmail.com',
-  })
-  .reply(201, {
-    ok: true,
-    id: '123ABC',
-    rev: '946B7D1C',
-  })
-  .get('/users/123ABC')
-  .reply(200, {
-    _id: '123ABC',
-    _rev: '946B7D1C',
-    username: 'pgte',
-    email: 'pedro.teixeira@gmail.com',
-  })
+git clone https://github.com/aws-observability/aws-otel-js.git ; \
+    cd sample-apps; \
+    docker build --tag "sample-app" --file sampleapp/Dockerfile .
+
+docker run -e LISTEN_ADDRESS=0.0.0.0:8080 \
+    -e INSTANCE_ID="sample-app" \
+    -e OTEL_EXPORTER_OTLP_ENDPOINT=172.17.0.1:55680 \
+    -e OTEL_RESOURCE_ATTRIBUTES="aws-otel-integ-test" \
+    -p 8080:8080 sample-app
 ```
 
-**sinon**
-
-Use `sinon.sandbox` to simulate the whole environment.
- For instance we can use
+#### Step 4 - Run Integration Tests
+The last step is to clone the test framework and run the integration tests.
 
 ```
-readStub = sandbox.stub(fs, 'readFile').yields(null, data);
+git clone https://github.com/aws-observability/aws-otel-test-framework.git
+
+cd aws-otel-test-framework &&
+    ./gradlew :validator:run --args='-c js-otel-trace-metric-validation.yml --endpoint http://127.0.0.1:8080 --metric-namespace aws-otel-integ-test -t "sample-app"
 ```
 
-to simulate that when the `fs.readFile()` method is called, it will return `(err: null, data)`
- And in our case, we need to simulate promisified method, so we do
+### Benchmarks
 
+In our [aws-otel-js repo](https://github.com/aws-observability/aws-otel-js/), we included a series of benchmarks for the componentsand posted the results. To benchmark our components we used the [benchmarkjs library](https://benchmarkjs.com/).
+
+The benchmarks cover the following operations:
+* start-end sampled span 
+* start-end un-sampled span
+* start-end nested sampled spans
+* start-end nested un-sampled spans
+* get current span
+* add attributes to span
+* X-Ray trace id generator - generate trace IDs and span IDs
+* X-Ray propagator - inject and extract methods
+
+To run the benchmarks, you can run the following commands:
+```bash
+git clone https://github.com/aws-observability/aws-otel-js.git
+
+cd aws-otel-js/benchmark
+
+npm i && npm run bench
 ```
-    readStub = sandbox
-      .stub(cache, 'readFileAsync')
-      .resolves(JSON.stringify(data));
-```
-
-to simulate asynchronous method.
- Note that each time before a test case started and after a test case finished, we need to ensure the status of sandbox:
-
-```
-  let sandbox: sinon.SinonSandbox;
-
-  beforeEach(() => {
-    sandbox = sinon.createSandbox();
-  });
-
-  afterEach(() => {
-    sandbox.restore();
-  });
-```
-
-Then for instance, if we would like to build a successful test case, we do:
-
-```
-  it('should successfully return resource data', async () => {
-    fileStub = sandbox.stub(fs, 'access').yields(null);
-    readStub = sandbox
-      .stub(cache, 'readFileAsync')
-      .resolves(JSON.stringify(data));
-    sandbox.stub(JSON, 'parse').returns(data);
-
-    const resource = await awsBeanstalkDetector.detect({
-      logger: new NoopLogger(),
-    });
-
-    sandbox.assert.calledOnce(fileStub);
-    sandbox.assert.calledOnce(readStub);
-    assert.ok(resource);
-    assertServiceResource(resource, {
-      name: 'elastic_beanstalk',
-      namespace: 'scorekeep',
-      version: 'app-5a56-170119_190650-stage-170119_190650',
-      instanceId: '32',
-    });
-  });
-```
-
-1. First stub methods need to be mocked
-2. The take use of the function to be tested and get result
-3. verify the result is as expected
-
 
 ## Future Enhancements
-
-* []
+* [Moving AWS X-Ray Components to JS-Contrib](https://github.com/open-telemetry/opentelemetry-js-contrib/issues/276)
+* [Moving Vendor Components to Contrib](https://github.com/open-telemetry/opentelemetry-js/issues/1726)
 * [Support for vendor code](https://github.com/open-telemetry/opentelemetry-js/issues/1335)
 * [Attribute of resource constants](https://github.com/open-telemetry/opentelemetry-js/issues/1394)
 * [Proposal for vendor-guide docs](https://github.com/open-telemetry/opentelemetry-js/issues/1422)
 
 ## Pull Requests Filed
 * [Testbed README Update](https://github.com/open-telemetry/opentelemetry-collector/pull/1338)
+* [IdGenerator and Propagator](https://github.com/open-o11y/aws-opentelemetry-js/pull/2)
 * [AWS Beanstalk resource detector](https://github.com/open-telemetry/opentelemetry-js/pull/1385)
 * [Amazon ECS resource detector](https://github.com/open-telemetry/opentelemetry-js/pull/1404)
 * [Amazon EC2 resource detector](https://github.com/open-telemetry/opentelemetry-js/pull/1408)
 * [Amazon EKS resource detector](https://github.com/open-telemetry/opentelemetry-js/pull/1669)
+* [Update propagator and id generator to v0.13.0](https://github.com/aws-observability/aws-otel-js/pull/39)
+* [Add parsing JS Exceptions to AWS X-Ray Exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/1888)
+* [Adding Integration Workflow](https://github.com/aws-observability/aws-otel-js/pull/34)
 * [Bug Fix for AWS X-Ray Exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/830)
 * [Unit test for AWS X-Ray Exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/390)
 
 ## References
+* [ID Generator and Propagator Package location](https://github.com/aws-observability/aws-otel-js/tree/main/packages)
+* [Resource Detectors Package location](https://github.com/open-telemetry/opentelemetry-js/tree/master/packages/opentelemetry-resource-detector-aws/src/detectors)
 
 
 ## Contributors
