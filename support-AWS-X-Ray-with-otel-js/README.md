@@ -1,8 +1,8 @@
-# Integrating OpenTelemetry JS SDK With AWS X-Ray
+# OpenTelemetry JS SDK Components for AWS X-Ray
 
 ## Table of Contents
 
-- [Integrating OpenTelemetry JS SDK With AWS X-Ray](#integrating-opentelemetry-js-sdk-with-aws-x-ray)
+- [OpenTelemetry JS SDK Components for AWS X-Ray](#opentelemetry-js-sdk-components-for-aws-x-ray)
   - [Table of Contents](#table-of-contents)
   - [Architecture Overview](#architecture-overview)
     - [Components](#components)
@@ -80,7 +80,8 @@
 
   * To learn more about `resource` check out the [OpenTelemetry specifications page](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/resource/sdk.md).
 
-  * The objective of a resource detector is to provide information about the environment in which the process is running in. The resource detectors we implemeneted will first detect whether an application instrumented with OpenTelemetry Go SDK is running on the various environments: AWS Beanstalk, Amazon ECS, Amazon EKS, and Amazon EC2.
+  * The objective of a resource detector is to provide information about the environment in which thjccncgudllkhgechujntgigdetfnblddifntvtedu
+  * e process is running in. The resource detectors we implemeneted will first detect whether an application instrumented with OpenTelemetry Go SDK is running on the various environments: AWS Beanstalk, Amazon ECS, Amazon EKS, and Amazon EC2.
   
   * If the ECS resource detector successfully detects that a process is running on an ECS environment, it will populate the resource with metadata about the container the process is in. This will include the `containerID`(the docker ID of the container) and `hostName`(name of the container).
   
@@ -220,6 +221,7 @@ npm i && npm run bench
 * [Support for vendor code](https://github.com/open-telemetry/opentelemetry-js/issues/1335)
 * [Attribute of resource constants](https://github.com/open-telemetry/opentelemetry-js/issues/1394)
 * [Proposal for vendor-guide docs](https://github.com/open-telemetry/opentelemetry-js/issues/1422)
+* Soak Tests
 
 ## Pull Requests Filed
 * [Testbed README Update](https://github.com/open-telemetry/opentelemetry-collector/pull/1338)
