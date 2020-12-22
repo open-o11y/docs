@@ -18,7 +18,7 @@
   * [Integration Testing](#integration-testing)
   * [Micro-benchmark Testing](#micro-benchmark-testing)
 * [Future Enhancements](#future-enhancements)
-* [Pull Requests](#pull-requests)
+* [Pull Requests and Issues](#pull-requests-and-issues)
 * [Contributors](#contributors)
 
 ## Architecture Overview 
@@ -334,18 +334,22 @@ To learn more about micro-benchmark testing using Go, please visit the [official
 ## Future Enhancements
 
 1. Perform soak testing
-2. Add stack trace to span attribute
-3. Transform captured errors/exceptions to X-Ray format
+2. [Exception semantic conventions and Go error return values](https://github.com/open-telemetry/opentelemetry-specification/issues/764)
+3. Transform captured errors/exceptions to X-Ray format (Dependent on point above)
 4. Change EKS resource detector to use Kubernetes client library ([Issue #478](https://github.com/open-telemetry/opentelemetry-go-contrib/issues/478))
 
-## Design Docs
-The design docs for the listed components can be found [here](design.md).
-
-## Pull Requests 
+## Pull Requests and Issues
 * [ID Generator](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/459)
 * [Propagator](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/462)
 * [ECS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/466)
 * [EKS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/465)
+* [Add Integration Test Workflow](https://github.com/aws-observability/aws-otel-go/pull/1)
+* [Add Micro-benchmarking Tests](https://github.com/aws-observability/aws-otel-go/pull/2)
+* [Add Integration Sample App](https://github.com/aws-observability/aws-otel-go/pull/3)
+* [Add DockerFile for Sample App](https://github.com/aws-observability/aws-otel-go/pull/5)
+* [Provide extensibility of the SDK to support vendor specific ID Generators](https://github.com/open-telemetry/opentelemetry-go/issues/1351)
+* [Use Kubernetes Client for EKS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/issues/478)
+* [X-Ray Exporter is treating HTTP 200 as a fault](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1739)
 
 ## Contributors 
 * [Kelvin Lo](https://github.com/KKelvinLo)
