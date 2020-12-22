@@ -130,11 +130,11 @@ docker run -e LISTEN_ADDRESS=0.0.0.0:8080 \
 The last step is to clone the test framework and run the integration tests.
 
 ```
-git clone https://github.com/aws-observability/aws-otel-test-framework.git ; \
+git clone https://github.com/aws-observability/aws-otel-test-framework.git
+
+cd aws-otel-test-framework &&
     ./gradlew :validator:run --args='-c go-otel-trace-validation.yml --endpoint http://127.0.0.1:8080 --metric-namespace aws-otel-integ-test -t "sample-app"
 ```
-
-
 
 ## Design Docs
 The design docs for the listed components can be found [here](design.md).
