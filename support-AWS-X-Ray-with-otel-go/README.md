@@ -113,7 +113,7 @@ git clone https://github.com/aws-observability/aws-otel-collector.git ; \
       --config otel-local-config.yaml; \
 ```
 
-#### Step 2 - Start Go Sample Integration App
+#### Step 3 - Start Go Sample Integration App
 The second step is to start a sample HTTP server written in Go. The purpose of the app is to generate traces and send them to AWS X-Ray so that we can validate the data.
 ```
 git clone https://github.com/aws-observability/aws-otel-go.git ; \
@@ -126,7 +126,7 @@ docker run -e LISTEN_ADDRESS=0.0.0.0:8080 \
     -p 8080:8080 sample-app
 ```
 
-#### Step 3 - Run Integration Tests
+#### Step 4 - Run Integration Tests
 The last step is to clone the test framework and run the integration tests.
 
 ```
