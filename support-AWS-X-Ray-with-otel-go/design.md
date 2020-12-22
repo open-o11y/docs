@@ -62,10 +62,10 @@ The objective of the ID Generator is to be able to support sending traces to AWS
 
 ### Design Tenets
 
-1. **Test Driven Development** - We will follow TDD practices established by the team and ensure proper test coverage.
-2. **Reliability** - The AWS X-Ray ID Generator will be reliable by gracefully handling errors. The ID Generator must return a `traceID` that is in the format that AWS X-Ray accepts. 
-3. **Go Best Practices** - The AWS X-Ray ID Generator will conform to best practices for Go as described in [Effective Go](https://golang.org/doc/effective_go.html).
-4. **Security** - The AWS X-Ray ID Generator will go through a security review to identify any potential vulnerabilities 
+1. **Security** - The AWS X-Ray ID Generator will go through a security review to identify any potential vulnerabilities 
+2. **Test Driven Development** - We will follow TDD practices established by the team and ensure proper test coverage.
+3. **Reliability** - The AWS X-Ray ID Generator will be reliable by gracefully handling errors. The ID Generator must return a `traceID` that is in the format that AWS X-Ray accepts. 
+4. **Go Best Practices** - The AWS X-Ray ID Generator will conform to best practices for Go as described in [Effective Go](https://golang.org/doc/effective_go.html).
 
 ### Struct Definition and Functions
 
