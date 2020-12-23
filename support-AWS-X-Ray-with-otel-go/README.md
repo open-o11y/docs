@@ -335,7 +335,7 @@ To learn more about micro-benchmark testing using Go, please visit the [official
 
 1. Perform soak testing
 2. [Exception semantic conventions and Go error return values](https://github.com/open-telemetry/opentelemetry-specification/issues/764)
-3. Transform captured errors/exceptions to X-Ray format (Dependent on point above)
+3. [Transform captured errors/exceptions to X-Ray format(Dependent on point above)](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1893)
 4. Change EKS resource detector to use Kubernetes client library ([Issue #478](https://github.com/open-telemetry/opentelemetry-go-contrib/issues/478))
 
 ## Pull Requests and Issues
