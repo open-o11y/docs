@@ -92,18 +92,7 @@ The objective of an ECS resource detector is to provide information about the co
 
 If the ECS resource detector successfully detects that a process is running on an ECS environment, it will populate the resource with metadata about the container the process is in. This will include the `containerID`(the docker ID of the container) and `hostName`(name of the container).
 
-The ECS resource detector will return either an empty Resource or a Resource which is filled with metadata depending on if the application instrumented is running on ECS or not.
-
-The resource detector contains the following functions:
-* `Detect()`
-  - This method is responsible for returning the resource with it's hostName and 
-   containerId. In the event that the application is not running on ECS it will
-   return an empty resource.
-* `getContainerID()`
-    - This method is responsible for returning the docker ID of the container found
-    in its CGroup file. 
-* `getHostName()`
-    - This method will return the host name of the container the process is in.
+![ECS Detector Diagram](images/ecs_flow.jpg)
 
 ### Amazon Elastic Kubernetes Service(EKS) Resource Detector
 
@@ -334,22 +323,28 @@ To learn more about micro-benchmark testing using Go, please visit the [official
 ## Future Enhancements
 
 1. Perform soak testing
-2. [Exception semantic conventions and Go error return values](https://github.com/open-telemetry/opentelemetry-specification/issues/764)
-3. [Transform captured errors/exceptions to X-Ray format(Dependent on point above)](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1893)
+2. Discuss exception semantic conventions and Go error return values ([Issue #764](https://github.com/open-telemetry/opentelemetry-specification/issues/764))
+3. Transform captured errors/exceptions to X-Ray format ([Issue #1893](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1893))
 4. Change EKS resource detector to use Kubernetes client library ([Issue #478](https://github.com/open-telemetry/opentelemetry-go-contrib/issues/478))
 
 ## Pull Requests and Issues
-* [ID Generator](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/459)
-* [Propagator](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/462)
-* [ECS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/466)
-* [EKS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/465)
-* [Add Integration Test Workflow](https://github.com/aws-observability/aws-otel-go/pull/1)
-* [Add Micro-benchmarking Tests](https://github.com/aws-observability/aws-otel-go/pull/2)
-* [Add Integration Sample App](https://github.com/aws-observability/aws-otel-go/pull/3)
-* [Add DockerFile for Sample App](https://github.com/aws-observability/aws-otel-go/pull/5)
-* [Provide extensibility of the SDK to support vendor specific ID Generators](https://github.com/open-telemetry/opentelemetry-go/issues/1351)
-* [Use Kubernetes Client for EKS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/issues/478)
-* [X-Ray Exporter is treating HTTP 200 as a fault](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1739)
+
+### Closed
+* [PR #459] [ID Generator](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/459)
+* [PR #462] [Propagator](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/462)
+* [PR #466] [ECS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/466)
+* [PR #465] [EKS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/pull/465)
+* [PR #1] [Add Integration Test Workflow](https://github.com/aws-observability/aws-otel-go/pull/1)
+* [PR #2] [Add Micro-benchmarking Tests](https://github.com/aws-observability/aws-otel-go/pull/2)
+* [PR #3] [Add Integration Sample App](https://github.com/aws-observability/aws-otel-go/pull/3)
+* [PR #5] [Add DockerFile for Sample App](https://github.com/aws-observability/aws-otel-go/pull/5)
+* [Issue #1351] [Provide extensibility of the SDK to support vendor specific ID Generators](https://github.com/open-telemetry/opentelemetry-go/issues/1351)
+* [Issue #1739] [X-Ray Exporter is treating HTTP 200 as a fault](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1739)
+
+### Open
+* [Issue #1893] [Add parsing of Go stack traces to AWS X-Ray Exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1893)
+* [Issue #478] [Use Kubernetes Client for EKS Resource Detector](https://github.com/open-telemetry/opentelemetry-go-contrib/issues/478)
+* [Issue #764] [Exception semantic conventions and Go error return values](https://github.com/open-telemetry/opentelemetry-specification/issues/764)
 
 ## Contributors 
 * [Kelvin Lo](https://github.com/KKelvinLo)
