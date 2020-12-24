@@ -12,7 +12,7 @@
 
 ## Architecture Overview
 
-[Image: ES Exporter.png]
+![SDK Data Path](./images/ES_Exporter-6.png)
 
 * **`ElasticsearchExporter`** class:
     * Inherits from the SDK’s LogExporter interface, and contains the implementation of the `Export()`, `Shutdown()`, and `MakeRecordable()` methods. 

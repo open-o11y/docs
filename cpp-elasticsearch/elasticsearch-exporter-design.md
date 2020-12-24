@@ -49,7 +49,7 @@ The format of data that Elasticsearch expects is JSON. The exporter could either
 
 The following UML diagram shows all the components present in the design of the Elasticsearch exporter. Each of the components in red will be described in more detail below. (the components in green are interfaces from the SDK and grey being third party libraries)
 
-[Image: ES_Exporter-6.png]
+![SDK Data Path](./images/ES_Exporter-6.png)
 
 
 
