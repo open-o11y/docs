@@ -80,12 +80,13 @@
 
   * To learn more about `resource` check out the [OpenTelemetry specifications page](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/resource/sdk.md).
 
-  * The objective of a resource detector is to provide information about the environment in which thjccncgudllkhgechujntgigdetfnblddifntvtedu
-  * e process is running in. The resource detectors we implemeneted will first detect whether an application instrumented with OpenTelemetry Go SDK is running on the various environments: AWS Beanstalk, Amazon ECS, Amazon EKS, and Amazon EC2.
+  * The objective of a resource detector is to provide information about the environment in which a process is running in. The resource detectors we implemented will first detect whether an application instrumented with OpenTelemetry JS SDK is running on the various environments: AWS Beanstalk, Amazon ECS, Amazon EKS, and Amazon EC2.
+
+   * We have implemented 4 resource detectors: AWS Beanstalk, Amazon ECS, Amazon EKS, and Amazon EC2. The source code can be found [here](https://github.com/open-telemetry/opentelemetry-js/tree/master/packages/opentelemetry-resource-detector-aws/src/detectors).
   
-  * If the ECS resource detector successfully detects that a process is running on an ECS environment, it will populate the resource with metadata about the container the process is in. This will include the `containerID`(the docker ID of the container) and `hostName`(name of the container).
+  * If a resource detector successfully detects that a process is running on an AWS environment, it will populate the resource with metadata about the container the process is in.
   
-  * The ECS resource detector will return either an empty Resource or a Resource which is filled with metadata depending on if the application instrumented is running on the listed environments or not.
+  * The resource detector will return either an empty Resource or a Resource which is filled with metadata depending on if the application instrumented is running on the listed environments or not.
 
 
 ### Data Path
