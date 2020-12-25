@@ -1,7 +1,18 @@
 # OpenTelemetry C++ Logging OStream Exporter
 
-## Architecture Overview
 
+## Table of Contents
+
+* [Architecture Overview](https://github.com/open-o11y/docs/blob/master/cpp-ostream/README.md#architecture-overview)
+* [Repository Structure](https://github.com/open-o11y/docs/blob/master/cpp-ostream/README.md#repository-structure)
+* [Usage](https://github.com/open-o11y/docs/blob/master/cpp-ostream/README.md#usage)
+* [Testing](https://github.com/open-o11y/docs/blob/master/cpp-ostream/README.md#testing)
+   * [CI Tests](https://github.com/open-o11y/docs/blob/master/cpp-ostream/README.md#ci-tests)
+   * [Unit Tests](https://github.com/open-o11y/docs/blob/master/cpp-ostream/README.md#unit-tests)
+* [Pull Requests](https://github.com/open-o11y/docs/blob/master/cpp-ostream/README.md#pull-requests)
+* [Reference Documents](https://github.com/open-o11y/docs/blob/master/cpp-ostream/README.md#reference-documents)
+
+## Architecture Overview
 
 ![OStream UML](../images/OStream-Log-UML.png)
 
